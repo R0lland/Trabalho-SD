@@ -1,0 +1,10 @@
+git clone (URL)---- fazer uma copia do diretório no pc
+cd (nomeDoDiretório)---- vai para o diretório
+dir--- mostra os arquivos do diretório
+git status--- mostra o que tem diferente entre nosso diretorio e o que foi publicado
+git add (nome do arquivo)--- adiciona qualquer mudança ou arquivo
+git commit -m "(frase qualquer sobre o arquivo ou mudança)"
+git push ---- manda para o site para todos terem acesso
+git pull ---- pega todos os arquivos do site
+git ---- mostra todos os comandos disponiveis
+
