@@ -1,10 +1,15 @@
-git clone (URL)---- fazer uma copia do diret髍io no pc
-cd (nomeDoDiret髍io)---- vai para o diret髍io
-dir--- mostra os arquivos do diret髍io
-git status--- mostra o que tem diferente entre nosso diretorio e o que foi publicado
-git add (nome do arquivo)--- adiciona qualquer mudan鏰 ou arquivo
-git commit -m "(frase qualquer sobre o arquivo ou mudan鏰)"
-git push ---- manda para o site para todos terem acesso
-git pull ---- pega todos os arquivos do site
-git ---- mostra todos os comandos disponiveis
+Comandos de linha:
+	git clone (URL)---- fazer uma copia do diret贸rio no pc
+	cd (nomeDoDiret贸rio)---- vai para o diret贸rio
+	dir--- mostra os arquivos do diret贸rio
+	git status--- mostra o que tem diferente entre nosso diretorio e o que foi publicado
+	git add (nome do arquivo)--- adiciona qualquer mudan莽a ou arquivo
+	git commit -m "(frase qualquer sobre o arquivo ou mudan莽a)"
+	git push ---- manda para o site para todos terem acesso
+	git pull ---- pega todos os arquivos do site
+	git ---- mostra todos os comandos disponiveis
 
+Obs: 
+	Tudo pode ser feito pela interface gr谩fica do GitHub Desktop (pra quem n茫o gosta de fazer tudo por linha de comando).
+	Um guia para isso: https://help.github.com/desktop/guides/contributing/
+  
