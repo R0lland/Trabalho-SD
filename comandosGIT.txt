@@ -1,4 +1,4 @@
-Comandos de linha:
+﻿Comandos de linha:
 	git clone (URL)---- fazer uma copia do diretório no pc
 	cd (nomeDoDiretório)---- vai para o diretório
 	dir--- mostra os arquivos do diretório
@@ -13,3 +13,5 @@ Obs:
 	Tudo pode ser feito pela interface gráfica do GitHub Desktop (pra quem não gosta de fazer tudo por linha de comando).
 	Um guia para isso: https://help.github.com/desktop/guides/contributing/
   
+
+SDJISJHUSAFIASFHAOSFj
