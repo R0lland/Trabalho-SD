@@ -12,11 +12,9 @@ import javax.jws.WebService;
  *
  * @author Ricardo Deitoz Posser
  */
-@WebService(endpointInterface = "soap.SoapServiceEndpointInterface")
+@WebService(endpointInterface = "SOAP.SoapServiceEndpointInterface")
 public class SoapServiceImplementationBean implements SoapServiceEndpointInterface{
 
-    //olá
-    //tchau
     @Override
     public boolean Adiciona() {
         
