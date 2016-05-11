@@ -15,6 +15,7 @@ import javax.jws.WebService;
 @WebService(endpointInterface = "soap.SoapServiceEndpointInterface")
 public class SoapServiceImplementationBean implements SoapServiceEndpointInterface{
 
+    //olá
     @Override
     public boolean Adiciona() {
         
