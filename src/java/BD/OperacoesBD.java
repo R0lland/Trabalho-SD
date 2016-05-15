@@ -40,6 +40,24 @@ public class OperacoesBD {
     }
     
     
+    public static boolean DeletaCarro(Carro carro){
+        try { 
+            // para excluir
+            String sql = "delete from Carro where codigo = ?";
+            PreparedStatement stmt = Conexao.getPreparedStatement(sql);
+            stmt.setInt(1, carro.getCodigo());
+            stmt.executeUpdate();
+            
+            return true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(OperacoesBD.class.getName()).log(Level.SEVERE, null, ex);
+            
+            return false;
+        }
+    }
+    
+    
     
     
 }
