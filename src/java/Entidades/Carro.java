@@ -9,6 +9,7 @@ package Entidades;
 public class Carro {
     private Integer codigo;
     private String marca;
+    private String modelo;
     private Integer ano;
     private float potencia;
     private float carga;
@@ -17,9 +18,10 @@ public class Carro {
     public Carro() {
     }
 
-    public Carro(Integer codigo, String marca, Integer ano, float potencia, float carga, String complemento) {
+    public Carro(Integer codigo, String marca, String modelo, Integer ano, float potencia, float carga, String complemento) {
         this.codigo = codigo;
         this.marca = marca;
+        this.modelo = modelo;
         this.ano = ano;
         this.potencia = potencia;
         this.carga = carga;
@@ -53,6 +55,21 @@ public class Carro {
     public void setMarca(String marca) {
         this.marca = marca;
     }
+    
+     /**
+     * @return the modelo
+     */
+    public String getModelo() {
+        return modelo;
+    }
+
+    /**
+     * @param modelo the marca to set
+     */
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+    
 
     /**
      * @return the ano
