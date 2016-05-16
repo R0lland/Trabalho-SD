@@ -7,6 +7,7 @@ package UDP;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Scanner;
 
 public class Cliente {
 
@@ -19,13 +20,14 @@ public class Cliente {
         byte buf2[] = new byte[100];
         String host = new String("localhost");
         int port = 2010;
-        String msg = new String("Hello World !!!");
+        System.out.println("Cliente Iniciado");
+        Scanner entrada = new Scanner (System.in);
+        System.out.println("Digite o comando:");
+        String msg = new String(entrada.nextLine());
         String msg2;
         
         InetAddress end = InetAddress.getByName(host);
         buf = msg.getBytes();
-        
-        System.out.println("Cliente Iniciado");
         DatagramSocket soc = new DatagramSocket();
         DatagramPacket pct = new DatagramPacket(buf, buf.length, end, port);
         soc.send(pct);
