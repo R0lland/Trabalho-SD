@@ -6,6 +6,7 @@
 
 package SOAP;
 
+import Entidades.Carro;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -19,10 +20,10 @@ import javax.jws.soap.SOAPBinding.Style;
 @SOAPBinding(style = Style.RPC)
 public interface SoapServiceEndpointInterface {
     
-    @WebMethod boolean Adiciona();
-    @WebMethod void Altera();
-    @WebMethod void Excluir();
-    @WebMethod void Consulta();
-    @WebMethod void ListaAnoModelo();
+    @WebMethod boolean Adiciona(Carro carro);
+    @WebMethod boolean Altera(Carro carro);
+    @WebMethod boolean Excluir(Carro carro);
+    @WebMethod boolean Consulta(Carro carro);
+    @WebMethod boolean ListaAnoModelo(Carro carro);
     
 }

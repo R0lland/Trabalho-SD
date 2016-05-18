@@ -6,6 +6,8 @@
 
 package SOAP;
 
+import BD.OperacoesBD;
+import Entidades.Carro;
 import javax.jws.WebService;
 
 /**
@@ -16,29 +18,28 @@ import javax.jws.WebService;
 public class SoapServiceImplementationBean implements SoapServiceEndpointInterface{
 
     @Override
-    public boolean Adiciona() {
+    public boolean Adiciona(Carro carro) {
+        return OperacoesBD.AdicionaCarro(carro);
+    }
+
+    @Override
+    public boolean Altera(Carro carro) {
+        return OperacoesBD.AlteraCarro(carro);
+    }
+
+    @Override
+    public boolean Excluir(Carro carro) {
         
-        return true; //Yet to be implemented. Returning true just to test.
+        return OperacoesBD.DeletaCarro(carro);
     }
 
     @Override
-    public void Altera() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean Consulta(Carro carro) {   
+        return OperacoesBD.ConsultaCarro(carro);
     }
 
     @Override
-    public void Excluir() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean ListaAnoModelo(Carro carro) {
+        return OperacoesBD.ListaAnoModelo(carro);
     }
-
-    @Override
-    public void Consulta() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void ListaAnoModelo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
