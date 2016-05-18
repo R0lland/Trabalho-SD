@@ -5,8 +5,10 @@
  */
 package Entidades;
 
+import java.io.Serializable;
 
-public class Carro {
+
+public class Carro implements Serializable{
     private Integer codigo;
     private String marca;
     private String modelo;
