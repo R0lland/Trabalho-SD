@@ -22,8 +22,8 @@ public interface SoapServiceEndpointInterface {
     
     @WebMethod boolean Adiciona(Carro carro);
     @WebMethod boolean Altera(Carro carro);
-    @WebMethod boolean Excluir(Carro carro);
-    @WebMethod boolean Consulta(Carro carro);
-    @WebMethod boolean ListaAnoModelo(Carro carro);
+    @WebMethod boolean Excluir(Integer codigo);
+    @WebMethod Carro Consulta(Integer codigo);
+    @WebMethod <ArrayList>Carro ListaAnoModelo(Integer ano, String modelo);
     
 }
