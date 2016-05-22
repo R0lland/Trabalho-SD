@@ -129,6 +129,32 @@ public class OperacoesBD {
         
     
     
+    public static List<Carro> listaCarro() throws SQLException{
+        
+        List<Carro> lista = new ArrayList();
+        Statement stmt = Conexao.getStatement();
+        ResultSet rs = stmt.executeQuery("select * from Carro");
+        
+        while(rs.next()){
+            Carro car = new Carro();
+            car.setCodigo(rs.getInt("codigo"));
+            car.setMarca(rs.getString("marca"));
+            car.setModelo(rs.getString("modelo"));
+            car.setAno(rs.getInt("ano"));
+            car.setPotencia(rs.getFloat("potencia"));
+            car.setCarga(rs.getFloat("carga"));
+            car.setComplemento(rs.getString("complemento"));
+            System.out.println("ADICIONOU O CARRO: " + car.getModelo());
+            
+            lista.add(car);
+            
+           
+        }
+        
+        return lista;
+    }
+    
+    
     
     
 }
