@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Servidor {
+
     public static void main(String[] args) {
         int porta = 2010;
         Carro carro = null;
@@ -44,7 +45,7 @@ public class Servidor {
             } catch (IOException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 carro = (Carro) vem.readObject();
             } catch (IOException ex) {
@@ -52,25 +53,25 @@ public class Servidor {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             System.out.println(carro.getMarca());
-                                 
-            OperacoesBD.AdicionaCarro(carro);
-            
-            try {
-                s.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (msg.equals("Encerrar")) {
-                System.out.println("Fim de conexão");
+
+            //OperacoesBD.adicionaCarro(carro);
+            //if (msg.equals("Encerrar")) {
                 try {
-                    ss.close();
-                    break;
+                    System.out.println("Cliente encerrou a conexão");
+                    s.close();
                 } catch (IOException ex) {
                     Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            //}
+            /*
+            try {
+                ss.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
+            */
         }
     }
 }
