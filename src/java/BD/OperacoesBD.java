@@ -12,8 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,8 +19,7 @@ import java.util.logging.Logger;
  */
 public class OperacoesBD {
     
-    public static boolean adicionaCarro(Carro carro){
-        try {
+    public static void adicionaCarro(Carro carro) throws SQLException{
                                            //  1i     2s      3s     4i     5f      6f       7s
             String sql = "insert into Carro (codigo, marca, modelo, ano, potencia, carga, complemento) values (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = Conexao.getPreparedStatement(sql);
@@ -34,37 +31,23 @@ public class OperacoesBD {
             stmt.setFloat(6, carro.getCarga());
             stmt.setString(7, carro.getComplemento());
             stmt.executeUpdate();
-            return true;
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(OperacoesBD.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+
         
     }
     
     
-    public static boolean deletaCarro(Carro carro){
-        try { 
+    public static void deletaCarro(Carro carro) throws SQLException{
             // para excluir
             String sql = "delete from Carro where codigo = ?";
             PreparedStatement stmt = Conexao.getPreparedStatement(sql);
             stmt.setInt(1, carro.getCodigo());
             stmt.executeUpdate();
             
-            return true;
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(OperacoesBD.class.getName()).log(Level.SEVERE, null, ex);
-            
-            return false;
-        }
     }
     
     
     
-    public static boolean alteraCarro(Carro carro){
-        try {
+    public static void alteraCarro(Carro carro) throws SQLException{
             //                               1          2          3          4            5            6                   7                   
             String sql = "update Carro set marca = ?, modelo = ?, ano = ?, potencia = ?, carga = ?, complemento = ? where codigo = ?";
             PreparedStatement stmt = Conexao.getPreparedStatement(sql);
@@ -76,15 +59,7 @@ public class OperacoesBD {
             stmt.setString(6, carro.getComplemento());
             stmt.setInt(7, carro.getCodigo());
             stmt.executeUpdate();
-            
-            return true;
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(OperacoesBD.class.getName()).log(Level.SEVERE, null, ex);
-            
-            return false;
-            
-        }
+
     }
         
     public static Carro consultaCarro(Integer cod) throws SQLException{
@@ -144,7 +119,6 @@ public class OperacoesBD {
             car.setPotencia(rs.getFloat("potencia"));
             car.setCarga(rs.getFloat("carga"));
             car.setComplemento(rs.getString("complemento"));
-            System.out.println("ADICIONOU O CARRO: " + car.getModelo());
             
             lista.add(car);
             
