@@ -30,6 +30,17 @@ public class Carro implements Serializable{
         this.complemento = complemento;
     }
 
+    public Carro(Integer codigo) {
+        this.codigo = codigo;
+    }
+
+    public Carro(String modelo, Integer ano) {
+        this.modelo = modelo;
+        this.ano = ano;
+    }
+    
+    
+
     /**
      * @return the codigo
      */
