@@ -25,17 +25,30 @@ public class Cliente {
         Socket s = null;
         Carro carro = null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        
+        try {
+                s = new Socket(host, porta);
+            } catch (IOException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         System.out.println("Cliente Executando");
         while (true) {
-            System.out.println("Digite a operação: ");
+            System.out.println("Operações: ");
+            System.out.println("1 - Adicionar");
+            System.out.println("2 - Consultar");
+            System.out.println("3 - Alterar");
+            System.out.println("4 - Excluir");
+            System.out.println("5 - Listar Ano e Modelo");
+            System.out.println("6 - Listar Carros");
+            System.out.println("7 - Encerrar Conexão");
             try {
                 msg = reader.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            if (msg.equals("adicionar")) {
+            if (msg.equals("1") || msg.equals("3")) {
                 try {
                     System.out.println("Digite o código: ");
                     Integer cod = Integer.parseInt(reader.readLine());
@@ -55,13 +68,43 @@ public class Cliente {
                 } catch (Exception e) {
                     System.out.println("Não conseguiu criar carro");
                 }
+            } 
+            else if (msg.equals("4")) {
+                System.out.println("Digite o código do carro a deletar: ");
+                try {
+                    Integer cod = Integer.parseInt(reader.readLine());
+                    carro = new Carro(cod);
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
-            try {
-                s = new Socket(host, porta);
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            else if(msg.equals("2"))
+            {
+                System.out.println("Digite o código do carro a consultar: ");
+                 try {
+                    Integer cod = Integer.parseInt(reader.readLine());
+                    carro = new Carro(cod);
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            else if(msg.equals("5"))
+                {                
+                 try {
+                    System.out.println("Digite o modelo: ");
+                    String modelo = reader.readLine();
+                    System.out.println("Digite o ano: ");
+                    Integer ano = Integer.parseInt(reader.readLine());
+                    carro = new Carro(modelo, ano);
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else if(!msg.equals("6") || !msg.equals("7"))
+            {
+                System.out.println("Digite uma opção valida");
+            }
+            
             ObjectOutputStream vai = null;
             try {
                 vai = new ObjectOutputStream(s.getOutputStream());
@@ -98,8 +141,7 @@ public class Cliente {
         System.out.println("Recebido do servidor: " + msgvolta);
              */
 
-            if (msg.equals("encerrar"))
-            {
+            if (msg.equals("7")) {
                 try {
                     s.close();
                 } catch (IOException ex) {
