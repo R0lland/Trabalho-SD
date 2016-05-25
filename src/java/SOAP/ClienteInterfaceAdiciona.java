@@ -6,8 +6,6 @@
 package SOAP;
 
 import Entidades.Carro;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -238,12 +236,11 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
        );
        
         try {
-            if ( cliente.adiciona(carro))
-                JOptionPane.showMessageDialog(rootPane, "Carro adicionado com sucesso.");
-                else
-                  JOptionPane.showMessageDialog(rootPane, "ERRO");
+            cliente.adiciona(carro);
+            JOptionPane.showMessageDialog(rootPane, "Carro adicionado com sucesso.");
         } catch (Exception ex) {
-            Logger.getLogger(ClienteInterfaceAdiciona.class.getName()).log(Level.SEVERE, null, ex);
+            
+            JOptionPane.showMessageDialog(rootPane, "MESSAGE TO BE IMPLEMENTED!");
         }
     }//GEN-LAST:event_salvarActionPerformed
 
