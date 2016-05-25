@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,13 +25,28 @@ public class Cliente {
         String msgvolta = new String();
         Socket s = null;
         Carro carro = null;
+        List<Carro> lista = null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        
+
         try {
-                s = new Socket(host, porta);
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            s = new Socket(host, porta);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ObjectOutputStream vai = null;
+        try {
+            vai = new ObjectOutputStream(s.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ObjectInputStream vem = null;
+        try {
+            vem = new ObjectInputStream(s.getInputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         System.out.println("Cliente Executando");
         while (true) {
@@ -47,100 +63,107 @@ public class Cliente {
             } catch (IOException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Integer opcao = Integer.parseInt(msg);
 
-            if (msg.equals("1") || msg.equals("3")) {
+            if (opcao > 7) {
+                System.out.println("Opção invalida");
+            } else {
                 try {
-                    System.out.println("Digite o código: ");
-                    Integer cod = Integer.parseInt(reader.readLine());
-                    System.out.println("Digite a marca: ");
-                    String marca = reader.readLine();
-                    System.out.println("Digite o modelo: ");
-                    String modelo = reader.readLine();
-                    System.out.println("Digite o ano: ");
-                    Integer ano = Integer.parseInt(reader.readLine());
-                    System.out.println("Digite o potencia: ");
-                    float potencia = Float.parseFloat(reader.readLine());
-                    System.out.println("Digite o carga: ");
-                    float carga = Float.parseFloat(reader.readLine());
-                    System.out.println("Digite o complemento: ");
-                    String complemento = reader.readLine();
-                    carro = new Carro(cod, marca, modelo, ano, potencia, carga, complemento);
-                } catch (Exception e) {
-                    System.out.println("Não conseguiu criar carro");
+                    vai.writeObject(msg);
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } 
-            else if (msg.equals("4")) {
-                System.out.println("Digite o código do carro a deletar: ");
                 try {
-                    Integer cod = Integer.parseInt(reader.readLine());
-                    carro = new Carro(cod);
+                    vai.flush();
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            else if(msg.equals("2"))
-            {
-                System.out.println("Digite o código do carro a consultar: ");
-                 try {
-                    Integer cod = Integer.parseInt(reader.readLine());
-                    carro = new Carro(cod);
+
+            if (opcao > 0 && opcao < 6) {
+                if (msg.equals("1") || msg.equals("3")) {
+                    try {
+                        System.out.println("Digite o código: ");
+                        Integer cod = Integer.parseInt(reader.readLine());
+                        System.out.println("Digite a marca: ");
+                        String marca = reader.readLine();
+                        System.out.println("Digite o modelo: ");
+                        String modelo = reader.readLine();
+                        System.out.println("Digite o ano: ");
+                        Integer ano = Integer.parseInt(reader.readLine());
+                        System.out.println("Digite o potencia: ");
+                        float potencia = Float.parseFloat(reader.readLine());
+                        System.out.println("Digite o carga: ");
+                        float carga = Float.parseFloat(reader.readLine());
+                        System.out.println("Digite o complemento: ");
+                        String complemento = reader.readLine();
+                        carro = new Carro(cod, marca, modelo, ano, potencia, carga, complemento);
+                    } catch (Exception e) {
+                        System.out.println("Não conseguiu criar carro");
+                    }
+                } else if (msg.equals("4")) {
+                    System.out.println("Digite o código do carro a deletar: ");
+                    try {
+                        Integer cod = Integer.parseInt(reader.readLine());
+                        carro = new Carro(cod);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (msg.equals("2")) {
+                    System.out.println("Digite o código do carro a consultar: ");
+                    try {
+                        Integer cod = Integer.parseInt(reader.readLine());
+                        carro = new Carro(cod);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else if (msg.equals("5")) {
+                    try {
+                        System.out.println("Digite o modelo: ");
+                        String modelo = reader.readLine();
+                        System.out.println("Digite o ano: ");
+                        Integer ano = Integer.parseInt(reader.readLine());
+                        carro = new Carro(modelo, ano);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                System.out.println("Enviou mensagem");
+
+                try {
+                    vai.writeObject(carro);
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    vai.flush();
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            else if(msg.equals("5"))
-                {                
-                 try {
-                    System.out.println("Digite o modelo: ");
-                    String modelo = reader.readLine();
-                    System.out.println("Digite o ano: ");
-                    Integer ano = Integer.parseInt(reader.readLine());
-                    carro = new Carro(modelo, ano);
+
+            if (opcao > 0 && opcao < 5) {
+                try {
+                    msgvolta = (String) vem.readObject();
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println(msgvolta);
+            }
+            if (msg.equals("5") || msg.equals("6")) {
+                try {
+                    lista = (List<Carro>) vem.readObject();
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                for (Carro car : lista) {
+                    System.out.println(car);
                 }
             }
-            else if(!msg.equals("6") || !msg.equals("7"))
-            {
-                System.out.println("Digite uma opção valida");
-            }
-            
-            ObjectOutputStream vai = null;
-            try {
-                vai = new ObjectOutputStream(s.getOutputStream());
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            System.out.println("Enviou mensagem");
-
-            try {
-                vai.writeObject(carro);
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                vai.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            /*
-        ObjectInputStream vem = null;
-        try {
-            vem = new ObjectInputStream(s.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            msgvolta = (String) vem.readObject();
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("Recebido do servidor: " + msgvolta);
-             */
-
             if (msg.equals("7")) {
                 try {
                     s.close();
