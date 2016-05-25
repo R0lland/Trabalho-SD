@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package SOAP;
 
 import Entidades.Carro;
+import java.sql.SQLException;
+import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -19,11 +20,20 @@ import javax.jws.soap.SOAPBinding.Style;
 @WebService
 @SOAPBinding(style = Style.RPC)
 public interface SoapServiceEndpointInterface {
-    
-    @WebMethod boolean Adiciona(Carro carro);
-    @WebMethod boolean Altera(Carro carro);
-    @WebMethod boolean Excluir(Integer codigo);
-    @WebMethod Carro Consulta(Integer codigo);
-    @WebMethod <ArrayList>Carro ListaAnoModelo(Integer ano, String modelo);
-    
+
+    @WebMethod
+    void Adiciona(Carro carro) throws SQLException;
+
+    @WebMethod
+    void Altera(Carro carro) throws SQLException;
+
+    @WebMethod
+    void Excluir(Carro carro) throws SQLException;
+
+    @WebMethod
+    Carro Consulta(Integer codigo) throws SQLException;
+
+    @WebMethod
+    List<Carro> listaAnoModelo(Integer ano, String modelo) throws SQLException;
+
 }
