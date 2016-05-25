@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package SOAP;
 
 import BD.OperacoesBD;
 import Entidades.Carro;
-import java.sql.SQLException;
-import java.util.List;
 import javax.jws.WebService;
 
 /**
@@ -16,30 +15,31 @@ import javax.jws.WebService;
  * @author Ricardo Deitoz Posser
  */
 @WebService(endpointInterface = "SOAP.SoapServiceEndpointInterface")
-public class SoapServiceImplementationBean implements SoapServiceEndpointInterface {
+public class SoapServiceImplementationBean implements SoapServiceEndpointInterface{
 
     @Override
-    public void Adiciona(Carro carro) throws SQLException {
-        OperacoesBD.adicionaCarro(carro);
+    public boolean Adiciona(Carro carro) {
+        return OperacoesBD.AdicionaCarro(carro);
     }
 
     @Override
-    public void Altera(Carro carro) throws SQLException {
-        OperacoesBD.alteraCarro(carro);
+    public boolean Altera(Carro carro) {
+        return OperacoesBD.AlteraCarro(carro);
     }
 
     @Override
-    public void Excluir(Carro carro) throws SQLException {
-        OperacoesBD.deletaCarro(carro);
+    public boolean Excluir(Carro carro) {
+        
+        return OperacoesBD.DeletaCarro(carro);
     }
 
     @Override
-    public Carro Consulta(Integer codigo) throws SQLException {
-        return OperacoesBD.consultaCarro(codigo);
+    public boolean Consulta(Carro carro) {   
+        return OperacoesBD.ConsultaCarro(carro);
     }
 
     @Override
-    public List<Carro> listaAnoModelo(Integer ano, String modelo) throws SQLException {
-        return OperacoesBD.listaAnoModelo(ano, modelo);
+    public boolean ListaAnoModelo(Carro carro) {
+        return OperacoesBD.ListaAnoModelo(carro);
     }
 }
