@@ -8,6 +8,7 @@ package SOAP;
 import Entidades.Carro;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
@@ -17,12 +18,12 @@ import javax.xml.ws.Service;
  */
 public class SoapClient {
   
-    public boolean  adiciona(Carro carro) throws Exception {
+    public void  adiciona(Carro carro) throws Exception {
         URL url= new URL("http://127.0.0.1:1991/SOAP?wsdl");
         QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
         Service ws=Service.create(url,qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-        return interf.Adiciona(carro);
+         interf.Adiciona(carro);
          
     }
      public Carro  consulta(Integer codigo) throws Exception {
@@ -33,27 +34,27 @@ public class SoapClient {
         return interf.Consulta(codigo);
          
     }
-      public boolean  altera(Carro carro) throws Exception {
+      public void  altera(Carro carro) throws Exception {
         URL url= new URL("http://127.0.0.1:1991/SOAP?wsdl");
         QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
         Service ws=Service.create(url,qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-        return interf.Altera(carro);
+         interf.Altera(carro);
          
     }
-    public boolean  excluir( Integer codigo) throws Exception {
+    public void  excluir( Carro carro) throws Exception {
         URL url= new URL("http://127.0.0.1:1991/SOAP?wsdl");
         QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
         Service ws=Service.create(url,qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-        return interf.Excluir(codigo);
+         interf.Excluir(carro);
     }
-    public <ArrayList>Carro  listaAnoModelo(Integer ano, String modelo) throws Exception {
+    public List<Carro>  listaAnoModelo(Integer ano, String modelo) throws Exception {
         URL url= new URL("http://127.0.0.1:1991/SOAP?wsdl");
         QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
         Service ws=Service.create(url,qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-        return interf.ListaAnoModelo(ano,modelo);
+        return interf.listaAnoModelo(ano,modelo);
     }
 }
 

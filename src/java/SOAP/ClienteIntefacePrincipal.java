@@ -36,6 +36,7 @@ public class ClienteIntefacePrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("CENTRAL DE CONTROLE");
 
         botao_adiciona.setText("Adicionar");
@@ -78,39 +79,37 @@ public class ClienteIntefacePrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(123, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(botao_consulta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
-                            .addComponent(botao_altera, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botao_adiciona, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botao_lista, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botao_excluir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(143, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botao_adiciona, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botao_altera, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botao_consulta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(botao_excluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botao_lista, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)))
+                        .addGap(123, 123, 123))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(botao_adiciona)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(botao_altera)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(botao_consulta)
                 .addGap(18, 18, 18)
                 .addComponent(botao_excluir)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(botao_lista)
-                .addGap(21, 21, 21))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -125,15 +124,18 @@ public class ClienteIntefacePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botao_alteraActionPerformed
 
     private void botao_excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_excluirActionPerformed
+       new ClienteInterfaceExcluir().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_botao_excluirActionPerformed
 
     private void botao_consultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_consultaActionPerformed
+       new ClienteInterfaceConsulta().setVisible(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_botao_consultaActionPerformed
 
     private void botao_listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_listaActionPerformed
-        // TODO add your handling code here:
+        new ClienteInterfaceLista().setVisible(true);
+// TODO add your handling code here:
     }//GEN-LAST:event_botao_listaActionPerformed
 
     /**

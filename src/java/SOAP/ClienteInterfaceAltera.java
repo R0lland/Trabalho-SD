@@ -247,12 +247,11 @@ public class ClienteInterfaceAltera extends javax.swing.JFrame {
        );
        
         try {
-            if ( cliente.altera(carro))
-                JOptionPane.showMessageDialog(rootPane, "Carro alterado com sucesso.");
-                else
-                  JOptionPane.showMessageDialog(rootPane, "ERRO");
+            cliente.altera(carro);
+            JOptionPane.showMessageDialog(rootPane, "Carro alterado com sucesso.");
+
         } catch (Exception ex) {
-            Logger.getLogger(ClienteInterfaceAltera.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "ERRO");
         }
     }//GEN-LAST:event_salvarActionPerformed
 

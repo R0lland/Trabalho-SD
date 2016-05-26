@@ -14,12 +14,12 @@ import javax.swing.JOptionPane;
  *
  * @author Djéssica Eickstaedt
  */
-public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
+public class ClienteInterfaceExcluir extends javax.swing.JFrame {
 
     /**
      * Creates new form ClienteInterfaceAdiciona
      */
-    public ClienteInterfaceAdiciona() {
+    public ClienteInterfaceExcluir() {
         initComponents();
     }
 
@@ -46,7 +46,8 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         campo_codigo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        salvar = new javax.swing.JButton();
+        excluir = new javax.swing.JButton();
+        botao_busca = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,10 +107,17 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
 
         jLabel8.setText("Código:");
 
-        salvar.setText("Salvar");
-        salvar.addActionListener(new java.awt.event.ActionListener() {
+        excluir.setText("Excluir");
+        excluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                salvarActionPerformed(evt);
+                excluirActionPerformed(evt);
+            }
+        });
+
+        botao_busca.setText("Buscar");
+        botao_busca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botao_buscaActionPerformed(evt);
             }
         });
 
@@ -117,56 +125,61 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(187, Short.MAX_VALUE)
-                .addComponent(salvar)
-                .addGap(150, 150, 150))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel8)
+                .addGap(18, 18, 18)
+                .addComponent(campo_codigo, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(botao_busca)
+                .addGap(66, 66, 66))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(excluir)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(campo_modelo))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(campo_marca, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addGap(25, 25, 25)
+                            .addComponent(campo_ano)))
+                    .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(campo_modelo))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(campo_marca, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addGap(25, 25, 25)
-                                    .addComponent(campo_ano)))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campo_potencia, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(campo_carga))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campo_complemento))))
+                            .addComponent(jLabel5)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(campo_potencia, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(108, 108, 108)
-                            .addComponent(jLabel8)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(campo_codigo)
-                            .addGap(79, 79, 79)))
+                            .addComponent(jLabel6)
+                            .addGap(18, 18, 18)
+                            .addComponent(campo_carga))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(campo_complemento)))
                     .addGap(19, 19, 19)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(252, Short.MAX_VALUE)
-                .addComponent(salvar)
-                .addGap(25, 25, 25))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(campo_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botao_busca))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
+                .addComponent(excluir)
+                .addGap(51, 51, 51))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(83, 83, 83)
@@ -187,11 +200,7 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
                         .addComponent(campo_ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7)
                         .addComponent(campo_complemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(campo_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(83, Short.MAX_VALUE)))
+                    .addContainerGap(121, Short.MAX_VALUE)))
         );
 
         pack();
@@ -225,9 +234,9 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campo_codigoActionPerformed
 
-    private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
+    private void excluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_excluirActionPerformed
        SoapClient cliente = new SoapClient();
-       Carro carro = new Carro(
+          Carro carro = new Carro(
                Integer.parseInt(campo_codigo.getText()), 
                campo_marca.getText(), 
                campo_modelo.getText(), 
@@ -237,14 +246,32 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
                campo_complemento.getText()
        );
        
+       
         try {
-            cliente.adiciona(carro);
-            JOptionPane.showMessageDialog(rootPane, "Carro adicionado com sucesso.");
+            cliente.excluir(carro);
+            JOptionPane.showMessageDialog(rootPane, "Carro excluido com sucesso.");
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "ERRO");
         }
-    }//GEN-LAST:event_salvarActionPerformed
+    }//GEN-LAST:event_excluirActionPerformed
+
+    private void botao_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_buscaActionPerformed
+       SoapClient cliente = new SoapClient();
+        try { 
+            Carro carro = cliente.consulta(Integer.parseInt(campo_codigo.getText()));
+            campo_ano.setText(String.valueOf(carro.getAno()));
+            campo_carga.setText(String.valueOf(carro.getCarga()));
+            campo_complemento.setText(carro.getComplemento());
+            campo_marca.setText(carro.getMarca());
+            campo_modelo.setText(carro.getModelo());
+            campo_potencia.setText(String.valueOf(carro.getPotencia()));
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteInterfaceExcluir.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_botao_buscaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,25 +290,29 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteInterfaceAdiciona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteInterfaceExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteInterfaceAdiciona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteInterfaceExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteInterfaceAdiciona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteInterfaceExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteInterfaceAdiciona.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteInterfaceExcluir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteInterfaceAdiciona().setVisible(true);
+                new ClienteInterfaceExcluir().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botao_busca;
     private javax.swing.JTextField campo_ano;
     private javax.swing.JTextField campo_carga;
     private javax.swing.JTextField campo_codigo;
@@ -289,6 +320,7 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
     private javax.swing.JTextField campo_marca;
     private javax.swing.JTextField campo_modelo;
     private javax.swing.JTextField campo_potencia;
+    private javax.swing.JButton excluir;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -296,6 +328,5 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JButton salvar;
     // End of variables declaration//GEN-END:variables
 }
