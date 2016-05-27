@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 
 public class Servidor {
 
+    //teste
     public static void main(String[] args) {
         int porta = 2010;
         Carro carro = null;
