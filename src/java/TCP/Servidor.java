@@ -12,8 +12,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +25,8 @@ public class Servidor {
     public static void main(String[] args) {
         int porta = 2010;
         Carro carro = null;
+        Carro carroVem = null;
+        List<Carro> listaCarro = null;
         String msg = null;
 
         System.out.println("Servidor Executando");
@@ -32,47 +36,171 @@ public class Servidor {
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        Socket s = null;
+        try {
+            s = ss.accept();
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ObjectInputStream vem = null;
+        try {
+            vem = new ObjectInputStream(s.getInputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        ObjectOutputStream vai = null;
+        try {
+            vai = new ObjectOutputStream(s.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         while (true) {
-            System.out.println("Aguardando Conexão ...");
-            Socket s = null;
-            try {
-                s = ss.accept();
-            } catch (IOException ex) {
-                Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            ObjectInputStream vem = null;
-            try {
-                vem = new ObjectInputStream(s.getInputStream());
-            } catch (IOException ex) {
-                Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            System.out.println("Aguardando Operacao ...");
 
             try {
-                carro = (Carro) vem.readObject();
+                msg = (String) vem.readObject();
             } catch (IOException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            System.out.println(carro.getMarca());
+            Integer opcao = Integer.parseInt(msg);
 
-            //OperacoesBD.adicionaCarro(carro);
-            //if (msg.equals("Encerrar")) {
+            if (opcao > 0 && opcao < 6) {
+                try {
+                    carro = (Carro) vem.readObject();
+                } catch (IOException ex) {
+                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (msg.equals("1")) {
+                    try {
+                        OperacoesBD.adicionaCarro(carro);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println("Inseriu");
+
+                    String msg2 = new String("Inseriu");
+                    try {
+                        vai.writeObject(msg2);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        vai.flush();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (msg.equals("2")) {
+                    try {
+                        carroVem = OperacoesBD.consultaCarro(carro.getCodigo());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println("Consultou");
+
+                    try {
+                        vai.writeObject(carroVem);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        vai.flush();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (msg.equals("3")) {
+                    try {
+                        OperacoesBD.alteraCarro(carro);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println("Alterou");
+                    String msg2 = new String("Alterou");
+                    try {
+                        vai.writeObject(msg2);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        vai.flush();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (msg.equals("4")) {
+                    try {
+                        OperacoesBD.deletaCarro(carro);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println("Deletou");
+                    String msg2 = new String("Deletou");
+                    try {
+                        vai.writeObject(msg2);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        vai.flush();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (msg.equals("5")) {
+                    try {
+                        listaCarro = OperacoesBD.listaAnoModelo(carro.getAno(), carro.getModelo());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        vai.writeObject(listaCarro);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    try {
+                        vai.flush();
+                    } catch (IOException ex) {
+                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+
+            }
+            if (msg.equals("6")) {
+                try {
+                    listaCarro = OperacoesBD.listaCarro();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    vai.writeObject(listaCarro);
+                } catch (IOException ex) {
+                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    vai.flush();
+                } catch (IOException ex) {
+                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (msg.equals("7")) {
+
                 try {
                     System.out.println("Cliente encerrou a conexão");
                     s.close();
                 } catch (IOException ex) {
                     Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            //}
-            /*
-            try {
-                ss.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            */
         }
     }
 }
