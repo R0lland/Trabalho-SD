@@ -157,6 +157,7 @@ public class Cliente {
             if (msg.equals("7")) {
                 try {
                     s.close();
+                    break;
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
