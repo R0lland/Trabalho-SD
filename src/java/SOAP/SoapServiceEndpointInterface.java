@@ -34,6 +34,6 @@ public interface SoapServiceEndpointInterface {
     Carro Consulta(Integer codigo) throws SQLException;
 
     @WebMethod
-    Carro[] listaAnoModelo(Integer ano, String modelo) throws SQLException;
+    List<Carro> listaAnoModelo(Integer ano, String modelo) throws SQLException;
 
 }
