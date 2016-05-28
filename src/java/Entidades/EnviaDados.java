@@ -5,13 +5,14 @@
  */
 package Entidades;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Mariana
  */
-public class EnviaDados {
+public class EnviaDados implements Serializable{
     private String dados;
     private Carro carro;
     private List<Carro> listaCarro;
