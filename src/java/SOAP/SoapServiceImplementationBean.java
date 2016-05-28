@@ -40,7 +40,10 @@ public class SoapServiceImplementationBean implements SoapServiceEndpointInterfa
     }
 
     @Override
-    public List<Carro> listaAnoModelo(Integer ano, String modelo) throws SQLException {
-        return OperacoesBD.listaAnoModelo(ano, modelo);
+    public Carro[] listaAnoModelo(Integer ano, String modelo) throws SQLException {
+            List<Carro> lista = OperacoesBD.listaAnoModelo(ano, modelo);
+            Carro[] array = new Carro[lista.size()];
+            lista.toArray(array);
+        return array;
     }
 }

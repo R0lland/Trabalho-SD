@@ -13,14 +13,10 @@ import javax.xml.ws.Endpoint;
  */
 public class SoapService {
 
-    private static String address;
+    private static String address = "http://127.0.0.1:1991/SOAP";
 
     public SoapService(String address) {
         SoapService.address = address;
-    }
-
-    public SoapService() {
-        SoapService.address = "http://127.0.0.1:1991/SOAP";
     }
 
     public String getLocation() {
