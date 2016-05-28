@@ -22,14 +22,15 @@ import java.util.logging.Logger;
 
 public class Servidor {
 
-    //teste
+ 
     public static void main(String[] args) {
         int porta = 2010;
-        Carro carro = null;
+        //Carro carro = null;
         Carro carroVem = null;
         List<Carro> listaCarro = null;
         String msg = null;
         EnviaDados enviaDados = null;
+        EnviaDados enviaDadosVem = null;
 
         System.out.println("Servidor Executando");
         ServerSocket ss = null;//cria o socket do servidor
@@ -65,26 +66,20 @@ public class Servidor {
             
             //ler o objeto que vira do cliente
             try {
-                msg = (String) vem.readObject();
+                enviaDadosVem = (EnviaDados) vem.readObject();
             } catch (IOException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            Integer opcao = Integer.parseInt(msg);
+            Integer opcao = Integer.parseInt(enviaDadosVem.getDados());
             //transforma em int pra ficar mais facil de verificar. Essas opcoes sempre vao receber um carro
-            if (opcao > 0 && opcao < 6) {
-                try {
-                    carro = (Carro) vem.readObject();
-                } catch (IOException ex) {
-                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (opcao > 0 && opcao < 7) 
+            {
                 if (msg.equals("1")) {
                     try {
-                        OperacoesBD.adicionaCarro(carro);
+                        OperacoesBD.adicionaCarro(enviaDadosVem.getCarro());
                     } catch (SQLException ex) {
                         Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -93,7 +88,7 @@ public class Servidor {
                 }
                 if (msg.equals("2")) {
                     try {
-                        carroVem = OperacoesBD.consultaCarro(carro.getCodigo());
+                        carroVem = OperacoesBD.consultaCarro(enviaDadosVem.getCarro().getCodigo());
                     } catch (SQLException ex) {
                         Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -102,7 +97,7 @@ public class Servidor {
                 }
                 if (msg.equals("3")) {
                     try {
-                        OperacoesBD.alteraCarro(carro);
+                        OperacoesBD.alteraCarro(enviaDadosVem.getCarro());
                     } catch (SQLException ex) {
                         Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -111,7 +106,7 @@ public class Servidor {
                 }
                 if (msg.equals("4")) {
                     try {
-                        OperacoesBD.deletaCarro(carro);
+                        OperacoesBD.deletaCarro(enviaDadosVem.getCarro());
                     } catch (SQLException ex) {
                         Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -120,12 +115,20 @@ public class Servidor {
                 }
                 if (msg.equals("5")) {
                     try {
-                        listaCarro = OperacoesBD.listaAnoModelo(carro.getAno(), carro.getModelo());
+                        listaCarro = OperacoesBD.listaAnoModelo(enviaDadosVem.getCarro().getAno(), enviaDadosVem.getCarro().getModelo());
                     } catch (SQLException ex) {
                         Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     enviaDados = new EnviaDados(listaCarro);
                 }
+                if (msg.equals("6")) {
+                try {
+                    listaCarro = OperacoesBD.listaCarro();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                enviaDados = new EnviaDados(listaCarro);
+            }
                 
                 try {
                     vai.writeObject(enviaDados);
@@ -139,24 +142,7 @@ public class Servidor {
                 }
 
             }
-            if (msg.equals("6")) {
-                try {
-                    listaCarro = OperacoesBD.listaCarro();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                enviaDados = new EnviaDados(listaCarro);
-                try {
-                    vai.writeObject(enviaDados);
-                } catch (IOException ex) {
-                    Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
-                    vai.flush();
-                } catch (IOException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            
             if (msg.equals("7")) {
                 try {
                     System.out.println("Cliente encerrou a conexão");

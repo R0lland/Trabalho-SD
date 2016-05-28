@@ -6,6 +6,7 @@
 package TCP;
 
 import Entidades.Carro;
+import Entidades.EnviaDados;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,10 +20,11 @@ import java.util.logging.Logger;
 public class Cliente {
 
     public static void main(String[] args) {
-        int porta = 2010;
+        int porta = 2006;
         String host = new String("localhost");
         String msg = new String();
-        String msgvolta = new String();
+        EnviaDados enviaDados = null;
+        EnviaDados enviaDadosVolta = null;
         Socket s = null;
         Carro carro = null;
         List<Carro> lista = null;
@@ -65,19 +67,8 @@ public class Cliente {
             }
             Integer opcao = Integer.parseInt(msg);
 
-            if (opcao > 7) {
+            if (opcao > 7 || opcao < 0) {
                 System.out.println("Opção invalida");
-            } else {
-                try {
-                    vai.writeObject(msg);
-                } catch (IOException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
-                    vai.flush();
-                } catch (IOException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
 
             if (opcao > 0 && opcao < 6) {
@@ -128,10 +119,9 @@ public class Cliente {
                         Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                System.out.println("Enviou mensagem");
-
+                enviaDados = new EnviaDados(msg, carro);
                 try {
-                    vai.writeObject(carro);
+                    vai.writeObject(enviaDados);
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -140,27 +130,27 @@ public class Cliente {
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                System.out.println("Enviou mensagem");
             }
 
-            if (opcao > 0 && opcao < 5) {
+            if (opcao > 0 && opcao < 7) {
                 try {
-                    msgvolta = (String) vem.readObject();
+                    enviaDadosVolta = (EnviaDados) vem.readObject();
                 } catch (IOException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                System.out.println(msgvolta);
+            }
+            
+            if (opcao > 0 && opcao < 5) {
+                if(msg.equals("2"))
+                    System.out.println(enviaDadosVolta.getCarro());
+                else
+                    System.out.println(enviaDadosVolta.getDados());
             }
             if (msg.equals("5") || msg.equals("6")) {
-                try {
-                    lista = (List<Carro>) vem.readObject();
-                } catch (IOException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                for (Carro car : lista) {
+                for (Carro car : enviaDadosVolta.getListaCarro()) {
                     System.out.println(car);
                 }
             }
