@@ -140,14 +140,5 @@ public class Carro implements Serializable{
         this.complemento = complemento;
     }
     
-    public void mostraAtributos() {
-        System.out.println("Codigo:" + getCodigo());
-        System.out.println("Marca:" + getMarca());
-        System.out.println("Modelo:" + getModelo());
-        System.out.println("Ano:" + getAno());
-        System.out.println("Potencia:" + getPotencia());
-        System.out.println("Carga:" + getCarga());
-        System.out.println("Complemento:" + getComplemento());
-    }
     
 }

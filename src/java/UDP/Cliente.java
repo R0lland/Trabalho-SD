@@ -5,7 +5,6 @@
 package UDP;
 
 import Entidades.Carro;
-import Entidades.EnviaDados;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -29,7 +28,6 @@ public class Cliente {
         DatagramPacket pct = null;
         
         //String msg = new String();
-        EnviaDados enviaDados;
         Integer opcao;
         Carro carro;
         List<Carro> lista = null;
@@ -113,13 +111,10 @@ public class Cliente {
                     }   break;
                 default:
                     break;
-            }
-            
-            enviaDados = new EnviaDados(opcao, carro);
-            
+            }            
             ByteArrayOutputStream baos = new ByteArrayOutputStream(6400);
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(enviaDados);
+            oos.writeObject(carro);
             buf = baos.toByteArray();
             DatagramPacket packet = new DatagramPacket(buf, buf.length, enderecoServidor, port);
             soc.send(packet);

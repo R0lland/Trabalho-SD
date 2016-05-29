@@ -6,7 +6,6 @@
 package UDP;
 
 import Entidades.Carro;
-import Entidades.EnviaDados;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,27 +22,23 @@ public class Servidor {
         int portaCliente;
         byte[] dadosRecebido = new byte[5000];
         byte[] dadosEnviados = new byte[100];
-        Carro carro;
-        EnviaDados enviaDados;
         
         try {
             DatagramSocket serverSocket = new DatagramSocket(portaServidor);
             System.out.println(Servidor.getDataHora() + "Servidor iniciado");
             while(true)
             {
-                System.out.println(Servidor.getDataHora() + "Esperando requisição");
-                DatagramPacket receivePacket = new DatagramPacket(dadosRecebido, dadosRecebido.length);
-                serverSocket.receive(receivePacket);
-                System.out.println(Servidor.getDataHora() + "Pacote Recebido");
-                ByteArrayInputStream byteStream = new ByteArrayInputStream(dadosRecebido);
-                
+               System.out.println(Servidor.getDataHora() + "Esperando requisição");
+               DatagramPacket receivePacket = new DatagramPacket(dadosRecebido, dadosRecebido.length);
+               serverSocket.receive(receivePacket);
+               System.out.println(Servidor.getDataHora() + "Pacote Recebido");
+               ByteArrayInputStream byteStream = new ByteArrayInputStream(dadosRecebido);
+               Carro carro;
                 try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(byteStream))) {
-                    enviaDados = (EnviaDados) ois.readObject();
+                    carro = (Carro) ois.readObject();
                 }
-                
-                carro = enviaDados.getCarro();
-                System.out.println("operacao: " + enviaDados.getDados());
-                carro.mostraAtributos();
+               
+               carro.mostraAtributos();
                
                /*String msg = new String(receivePacket.getData());
                System.out.println("Mensagem Recebida: " + msg);
