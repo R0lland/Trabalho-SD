@@ -13,18 +13,20 @@ import java.util.List;
  * @author Mariana
  */
 public class EnviaDados implements Serializable{
-    private String dados;
+    private Integer operacao;
     private Carro carro;
     private List<Carro> listaCarro;
+    private String msg;
 
-    public EnviaDados(String dados, Carro carro, List<Carro> listaCarro) {
-        this.dados = dados;
+    public EnviaDados(Integer operacao, Carro carro, List<Carro> listaCarro, String msg) {
+        this.operacao = operacao;
         this.carro = carro;
         this.listaCarro = listaCarro;
+        this.msg = msg;
     }
 
-    public EnviaDados(String dados) {
-        this.dados = dados;
+    public EnviaDados(Integer operacao) {
+        this.operacao = operacao;
     }
 
     public EnviaDados(Carro carro) {
@@ -35,33 +37,27 @@ public class EnviaDados implements Serializable{
         this.listaCarro = listaCarro;
     }
 
-    public EnviaDados(String dados, Carro carro) {
-        this.dados = dados;
+    public EnviaDados(String msg) {
+        this.msg = msg;
+    }
+
+    public EnviaDados(Integer operacao, Carro carro) {
+        this.operacao = operacao;
         this.carro = carro;
     }
 
-    public EnviaDados(Carro carro, List<Carro> listaCarro) {
-        this.carro = carro;
-        this.listaCarro = listaCarro;
-    }
-
-    public EnviaDados(String dados, List<Carro> listaCarro) {
-        this.dados = dados;
-        this.listaCarro = listaCarro;
-    }
-    
     /**
-     * @return the dados
+     * @return the operacao
      */
-    public String getDados() {
-        return dados;
+    public Integer getOperacao() {
+        return operacao;
     }
 
     /**
-     * @param dados the dados to set
+     * @param operacao the operacao to set
      */
-    public void setDados(String dados) {
-        this.dados = dados;
+    public void setOperacao(Integer operacao) {
+        this.operacao = operacao;
     }
 
     /**
@@ -91,6 +87,21 @@ public class EnviaDados implements Serializable{
     public void setListaCarro(List<Carro> listaCarro) {
         this.listaCarro = listaCarro;
     }
+
+    /**
+     * @return the msg
+     */
+    public String getMsg() {
+        return msg;
+    }
+
+    /**
+     * @param msg the msg to set
+     */
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+    
     
     
 }
