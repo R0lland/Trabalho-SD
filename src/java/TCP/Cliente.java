@@ -71,7 +71,7 @@ public class Cliente {
                 System.out.println("Opção invalida");
             }
 
-            if (opcao > 0 && opcao < 6) {
+            if (opcao > 0 && opcao < 8) {
                 if (msg.equals("1") || msg.equals("3")) {
                     try {
                         System.out.println("Digite o código: ");
@@ -144,14 +144,27 @@ public class Cliente {
             }
             
             if (opcao > 0 && opcao < 5) {
-                if(msg.equals("2"))
-                    System.out.println(enviaDadosVolta.getCarro());
+                if(msg.equals("2")){
+                    System.out.println(enviaDadosVolta.getCarro().getCodigo() + " - " +
+                            enviaDadosVolta.getCarro().getMarca()+ " - " +
+                            enviaDadosVolta.getCarro().getModelo()+ " - " +
+                            enviaDadosVolta.getCarro().getAno()+ " - " +
+                            enviaDadosVolta.getCarro().getCarga()+ " - " +
+                            enviaDadosVolta.getCarro().getPotencia()+ " - " +
+                            enviaDadosVolta.getCarro().getComplemento());
+                }
                 else
                     System.out.println(enviaDadosVolta.getMsg());
             }
             if (msg.equals("5") || msg.equals("6")) {
                 for (Carro car : enviaDadosVolta.getListaCarro()) {
-                    System.out.println(car);
+                    System.out.println(car.getCodigo() + " - " +
+                            car.getMarca()+ " - " +
+                            car.getModelo()+ " - " +
+                            car.getAno()+ " - " +
+                            car.getCarga()+ " - " +
+                            car.getPotencia()+ " - " +
+                            car.getComplemento());
                 }
             }
             if (msg.equals("7")) {

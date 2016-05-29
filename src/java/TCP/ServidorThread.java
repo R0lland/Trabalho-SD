@@ -19,7 +19,8 @@ public class ServidorThread {
         while (true) {
 
             Socket s = ss.accept();
-
+            System.out.println("Conexão iniciada com o cliente "
+                    + s.getInetAddress().getHostAddress() + ":" + s.getPort());
             ThreadConexao tc = new ThreadConexao(s, s.getInputStream(), s.getOutputStream());
             new Thread(tc).start();
         }

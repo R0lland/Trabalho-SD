@@ -128,7 +128,8 @@ public class ThreadConexao extends Thread {
 
             if (msg.equals("7")) {
                 try {
-                    System.out.println("Cliente encerrou a conexão");
+                    System.out.println("Cliente " +
+                            s.getInetAddress().getHostAddress() + ":" + s.getPort() + " encerrou a conexao");
                     s.close();
                     break;
                 } catch (IOException ex) {
