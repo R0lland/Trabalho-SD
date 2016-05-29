@@ -20,8 +20,9 @@ public class Servidor {
         //create new thread pool with two threads
         ExecutorService application = Executors.newCachedThreadPool();
         
+        int tamanhoFila = 10;
         //create BlockingBuffer to store DatagramPacket
-        BlockingBuffer sharedLocation = new BlockingBuffer(1);
+        BlockingBuffer sharedLocation = new BlockingBuffer(tamanhoFila);
         
         application.execute(new EnviaFila(sharedLocation));
         application.execute(new RetiraFila(sharedLocation));
