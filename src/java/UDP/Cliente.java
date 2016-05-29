@@ -5,6 +5,7 @@
 package UDP;
 
 import Entidades.Carro;
+import Entidades.EnviaDados;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class Cliente {
         DatagramPacket pct = null;
         
         //String msg = new String();
+        EnviaDados enviaDados;
         Integer opcao;
         Carro carro;
         List<Carro> lista = null;
@@ -42,18 +44,17 @@ public class Cliente {
             System.out.println("4 - Excluir");
             System.out.println("5 - Listar Ano e Modelo");
             System.out.println("6 - Listar Carros");
-            System.out.println("7 - Encerrar Conexão");
             
             try {
                 opcao = Integer.parseInt(reader.readLine());
             } catch (IOException | NumberFormatException e) {
                 System.out.println("Operação inválida!");
-                continue;
+                break;
             }
             
-            if (opcao > 7 || opcao < 1) {
+            if (opcao > 6 || opcao < 1) {
                 System.out.println("Operação inválida!");
-                continue;
+                break;
             }
             
             carro = new Carro();
@@ -111,10 +112,12 @@ public class Cliente {
                     }   break;
                 default:
                     break;
-            }            
+            }
+            
+            enviaDados = new EnviaDados(opcao, carro);
             ByteArrayOutputStream baos = new ByteArrayOutputStream(6400);
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(carro);
+            oos.writeObject(enviaDados);
             buf = baos.toByteArray();
             DatagramPacket packet = new DatagramPacket(buf, buf.length, enderecoServidor, port);
             soc.send(packet);
