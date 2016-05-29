@@ -56,7 +56,7 @@ public class ThreadConexao extends Thread {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            msg = enviaDadosVem.getDados();
+            msg = enviaDadosVem.getOperacao().toString();
             Integer opcao = Integer.parseInt(msg);
             //transforma em int pra ficar mais facil de verificar. Essas opcoes sempre vao receber um carro
             if (opcao > 0 && opcao < 7) {

@@ -72,17 +72,17 @@ public class Servidor {
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            msg = enviaDadosVem.getDados();
+            msg = enviaDadosVem.getOperacao().toString();
             Integer opcao = Integer.parseInt(msg);
             //transforma em int pra ficar mais facil de verificar. Essas opcoes sempre vao receber um carro
             if (opcao > 0 && opcao < 7) 
             {
                 if (msg.equals("1")) {
-                    /*try {
+                    try {
                         OperacoesBD.adicionaCarro(enviaDadosVem.getCarro());
                     } catch (SQLException ex) {
                         Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                    }
                     System.out.println("Inseriu");
                     enviaDados = new EnviaDados("Inseriu");
                 }
@@ -96,11 +96,11 @@ public class Servidor {
                     enviaDados = new EnviaDados(carroVem);
                 }
                 if (msg.equals("3")) {
-                    /*try {
+                    try {
                         OperacoesBD.alteraCarro(enviaDadosVem.getCarro());
                     } catch (SQLException ex) {
                         Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
+                    }
                     System.out.println("Alterou");
                     enviaDados = new EnviaDados("Alterou");
                 }

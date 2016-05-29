@@ -67,7 +67,7 @@ public class Cliente {
             }
             Integer opcao = Integer.parseInt(msg);
 
-            if (opcao > 7 || opcao < 0) {
+            if (opcao > 7 || opcao < 1) {
                 System.out.println("Opção invalida");
             }
 
@@ -119,7 +119,7 @@ public class Cliente {
                         Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                enviaDados = new EnviaDados(msg, carro);
+                enviaDados = new EnviaDados(opcao, carro);
                 try {
                     vai.writeObject(enviaDados);
                 } catch (IOException ex) {
@@ -147,7 +147,7 @@ public class Cliente {
                 if(msg.equals("2"))
                     System.out.println(enviaDadosVolta.getCarro());
                 else
-                    System.out.println(enviaDadosVolta.getDados());
+                    System.out.println(enviaDadosVolta.getMsg());
             }
             if (msg.equals("5") || msg.equals("6")) {
                 for (Carro car : enviaDadosVolta.getListaCarro()) {
