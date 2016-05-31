@@ -15,6 +15,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,34 +35,53 @@ public class Cliente {
         Carro carro;
         List<Carro> lista = null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        
+        String sc;
         while (true) {
             //opcao = null;
-            System.out.println("Operações: ");
-            System.out.println("1 - Adicionar");
-            System.out.println("2 - Consultar");
-            System.out.println("3 - Alterar");
-            System.out.println("4 - Excluir");
-            System.out.println("5 - Listar Ano e Modelo");
-            System.out.println("6 - Listar Carros");
-            
-            try {
-                opcao = Integer.parseInt(reader.readLine());
-            } catch (IOException | NumberFormatException e) {
-                System.out.println("Operação inválida!");
-                break;
+            while (true){
+                while(true){
+                    System.out.println("Digite a operação:          9 para comandos");
+                    Scanner scanner = new Scanner( System.in );
+                    sc = scanner.nextLine();
+                    opcao = Integer.parseInt(sc);
+
+                    if (sc.equals("9"))
+                        System.out.println(" 1 - Adicionar\n"
+                                         + " 2 - Excluir\n"
+                                         + " 3 - Alterar\n"
+                                         + " 4 - Excluir\n"
+                                         + " 5 - Listar Ano e Modelo\n"
+                                         + " 6 - Listar Carros\n"
+                                         + " 7 - Sair\n\n");
+                    else break;
+                }
+
+                if (opcao < 1 || opcao > 6 ) {
+                    System.out.println("\nOperação inválida!\n\n");
+                }
+                else break;
             }
             
-            if (opcao > 6 || opcao < 1) {
-                System.out.println("Operação inválida!");
-                break;
-            }
+            if (sc.equals("7"))
+                System.out.println(" Fechando programa....\n");
+            else break;
             
             carro = new Carro();
             
             switch (opcao) {
-                case 1:
-                case 3:
+                case 1:                             //adicionar
+                    System.out.println(" Adicionar");
+                    break;
+                case 2:                             //consultar
+                    System.out.println(" Consultar");
+                    System.out.println("Digite o código do carro a consultar: ");
+                    try {
+                        carro.setCodigo(Integer.parseInt(reader.readLine()));
+                    } catch (IOException ex) {
+                        Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    }   break;
+                case 3:                             //alterar
+                    System.out.println(" Alterar");
                     try {
                         System.out.println("Digite o código: ");
                         carro.setCodigo(Integer.parseInt(reader.readLine()));
@@ -87,21 +107,16 @@ public class Cliente {
                     } catch (IOException | NumberFormatException e) {
                         System.out.println("Não conseguiu criar carro");
                     }   break;
-                case 4:
+                case 4:                             //excluir
+                    System.out.println("Excluir");
                     System.out.println("Digite o código do carro a deletar: ");
                     try {
                         carro.setCodigo(Integer.parseInt(reader.readLine()));
                     } catch (IOException ex) {
                         Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }   break;
-                case 2:
-                    System.out.println("Digite o código do carro a consultar: ");
-                    try {
-                        carro.setCodigo(Integer.parseInt(reader.readLine()));
-                    } catch (IOException ex) {
-                        Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                    }   break;
-                case 5:
+                case 5:                             //listar ano e modelo
+                    System.out.println("Listar Ano e Modelo");
                     try {
                         System.out.println("Digite o modelo: ");
                         carro.setModelo(reader.readLine());
@@ -110,6 +125,9 @@ public class Cliente {
                     } catch (IOException ex) {
                         Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }   break;
+                case 6:                             //listar carros
+                    System.out.println("Listar Carros");
+                    break;
                 default:
                     break;
             }
