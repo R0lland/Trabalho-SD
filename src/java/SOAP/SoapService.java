@@ -12,27 +12,22 @@ import javax.xml.ws.Endpoint;
  * @author Ricardo Deitoz Posser
  */
 public class SoapService {
-
-    private static String address;
-
-    public SoapService(String address) {
-        SoapService.address = address;
-    }
-
-    public SoapService() {
-        SoapService.address = "http://127.0.0.1:1991/SOAP";
-    }
-
-    public String getLocation() {
-        return address;
-    }
-
-    public void setLocation(String address) {
-        SoapService.address = address;
-    }
-
-    public static void main(String[] args) {
-        Endpoint.publish(address,
-                new SoapServiceImplementationBean());
-    }
-}
+      private static String address = "http://127.0.0.1:1991/SOAP";
+  
+      public SoapService(String address) {
+          SoapService.address = address;
+      }
+  
+      public String getLocation() {
+          return address;
+      }
+ 
+     public void setLocation(String address) {
+         SoapService.address = address;
+     }
+ 
+     public static void main(String[] args) {
+         Endpoint.publish(address,
+                 new SoapServiceImplementationBean());
+     }
+ }

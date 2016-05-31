@@ -6,9 +6,7 @@
 package SOAP;
 
 import Entidades.Carro;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
@@ -49,7 +47,7 @@ public class SoapClient {
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
          interf.Excluir(carro);
     }
-    public List<Carro>  listaAnoModelo(Integer ano, String modelo) throws Exception {
+    public Carro[]  listaAnoModelo(Integer ano, String modelo) throws Exception {
         URL url= new URL("http://127.0.0.1:1991/SOAP?wsdl");
         QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
         Service ws=Service.create(url,qname);

@@ -7,7 +7,6 @@ package SOAP;
 
 import Entidades.Carro;
 import java.sql.SQLException;
-import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
@@ -34,6 +33,6 @@ public interface SoapServiceEndpointInterface {
     Carro Consulta(Integer codigo) throws SQLException;
 
     @WebMethod
-    List<Carro> listaAnoModelo(Integer ano, String modelo) throws SQLException;
+    Carro[] listaAnoModelo(Integer ano, String modelo) throws SQLException;
 
 }
