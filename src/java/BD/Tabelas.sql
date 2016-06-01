@@ -11,8 +11,6 @@ CREATE TABLE CARRO (
 );
 
 
-
-
 /*
 - codigo: Inteiro (chave primária)
 - Marca: String

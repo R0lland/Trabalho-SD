@@ -6,14 +6,6 @@
 package REST;
 
 // Plain old Java Object it does not extend as class or implements 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -35,19 +27,17 @@ public class RestWS {
 
         String retorno = null;
         
-        switch (funcao) {
-            case "getTodos":
-                retorno = getTodos();
-                return retorno;
-                
-            case "getById":
-                retorno = getById(id);
-                return retorno;
-        }
+//        switch (funcao) {
+//            case "getTodos":
+//                retorno = getTodos();
+//                return retorno;
+//                
+//            case "getById":
+//                retorno = getById(id);
+//                return retorno;
+//        }
 
         return null;
     }
-
- 
 
 }
