@@ -51,21 +51,21 @@ public class Testes extends OperacoesBD{
             Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("ERRO AO INCLUIR...");
         }
-          */  
-        
+            
+        */
         /*----------------------------------------------------------------------------------------------------*/
             
             /* DELETA CARRO..............*/
-            Carro car = new Carro();
+            /*Carro car = new Carro();
             
             car.setCodigo(3);
-            /*car.setMarca("Volkswagen");
+            car.setMarca("Volkswagen");
             car.setModelo("Polo");
             car.setAno(2006);
             car.setPotencia((float) 1.6);
             car.setCarga((float)555.22);
             car.setComplemento("carro de passeio, capacidade máxima 5 pessoas.");
-            */
+            
             
             System.out.println("Agora vai Deletar!!");
             try{
@@ -78,7 +78,7 @@ public class Testes extends OperacoesBD{
             
             
           
-            
+            */
             
         
         /*------------------------------------------------------------------------------------------------*/
@@ -86,7 +86,7 @@ public class Testes extends OperacoesBD{
             /*ALTERAR UM CARRO......
             Carro car = new Carro();
             
-            car.setCodigo(1);
+            car.setCodigo(3);
             car.setMarca("Volkswagen");
             car.setModelo("Polo");
             car.setAno(2006);
@@ -103,8 +103,8 @@ public class Testes extends OperacoesBD{
             Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("ERRO AO ALTERAR...");
             }
-         */
-            
+         
+            */
             
         /*---------------------------------------------------------------------------------------------------------*/
         
@@ -114,13 +114,12 @@ public class Testes extends OperacoesBD{
             
             System.out.println("Agora vai Consultar!!");
             try {
-            car = OperacoesBD.consultaCarro(2);
+            car = OperacoesBD.consultaCarro(3);
             System.out.println("CONSULTOU CARRO: " + car.getModelo());
             } catch (SQLException ex) {
             Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("NAO ACHOU ESSE CARRO!!");
             }
-            
             */
             
             
@@ -132,7 +131,7 @@ public class Testes extends OperacoesBD{
             
             System.out.println("Agora vai buscar lista!!");
             try {
-            lista = OperacoesBD.listaAnoModelo(2006, "Polo ALTERADO");
+            lista = OperacoesBD.listaAnoModelo(2006, "Polo");
             
             for (Carro car : lista) {
             System.out.println("LISTOU O CARRO: " + car.getModelo());

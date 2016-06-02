@@ -6,9 +6,8 @@
 package REST;
 
 // Plain old Java Object it does not extend as class or implements 
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -18,14 +17,17 @@ import javax.ws.rs.core.MediaType;
 // text, XML and HTML. 
 // The browser requests per default the HTML MIME type.
 //Sets the path to base URL + /hello
-@Path("/carro/{id}/function/{funcao}")
+@Path("/carro")
 public class RestWS {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getCarro(@PathParam("id") Integer id, @PathParam("funcao") String funcao) {
+    @Path("/inserirCarro")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String inserirCarro(String teste) {
 
-        String retorno = null;
+        System.out.println("REST WS recebeu: "+teste);
+        
+        return "OK";
         
 //        switch (funcao) {
 //            case "getTodos":
@@ -37,7 +39,6 @@ public class RestWS {
 //                return retorno;
 //        }
 
-        return null;
     }
 
 }
