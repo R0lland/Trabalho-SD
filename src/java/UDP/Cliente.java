@@ -47,7 +47,6 @@ public class Cliente {
                     Scanner scanner = new Scanner( System.in );
                     sc = scanner.nextLine();
                     opcao = Integer.parseInt(sc);
-
                     if (sc.equals("9"))
                         System.out.println(" 1 - Adicionar\n"
                                          + " 2 - Excluir\n"
@@ -64,11 +63,12 @@ public class Cliente {
                 }
                 else break;
             }
-            
-            if (sc.equals("7"))
+            System.out.println(opcao);
+            if (sc.equals("7")){
                 System.out.println(" Fechando programa....\n");
-            else break;
-            
+                break;
+            }
+            System.out.println(opcao);
             carro = new Carro();
             
             switch (opcao) {
@@ -160,26 +160,6 @@ public class Cliente {
                     break;
             }
             
-//            System.out.println("Digite o código: ");
-//            carro.setCodigo(Integer.parseInt(reader.readLine()));
-//
-//            System.out.println("Digite a marca: ");
-//            carro.setMarca(reader.readLine());
-//
-//            System.out.println("Digite o modelo: ");
-//            carro.setModelo(reader.readLine());
-//
-//            System.out.println("Digite o ano: ");
-//            carro.setAno(Integer.parseInt(reader.readLine()));
-//
-//            System.out.println("Digite o potencia: ");
-//            carro.setPotencia(Float.parseFloat(reader.readLine()));
-//
-//            System.out.println("Digite o carga: ");
-//            carro.setCarga(Float.parseFloat(reader.readLine()));
-//
-//            System.out.println("Digite o complemento: ");
-//            carro.setComplemento(reader.readLine());
             
             sEnviaDados = opcao + ":" +
                           carro.getCodigo() + ":" +
@@ -189,7 +169,7 @@ public class Cliente {
                           carro.getPotencia() + ":" +
                           carro.getCarga() + ":" +
                           carro.getComplemento();
-            
+            System.out.println(sEnviaDados);
             buf = sEnviaDados.getBytes();
             soc = new DatagramSocket();
             pct = new DatagramPacket(buf, buf.length, enderecoServidor, port);
@@ -197,137 +177,12 @@ public class Cliente {
             
             System.out.println("Enviou mensagem");
             
-            DatagramPacket pct2 = new DatagramPacket(buf2, buf2.length);
-            soc.receive(pct2);
-            recebeDadosString = new String(pct2.getData());
+//                      receber de volta do servidor
+//            DatagramPacket pct2 = new DatagramPacket(buf2, buf2.length);
+//            soc.receive(pct2);
+//            recebeDadosString = new String(pct2.getData());
             
             
-            //buf = carro.getBytes();
-            //pct = new DatagramPacket(buf, buf.length, end, port);
-            /*enviaDados = new EnviaDados(msg, carro);
-            try {
-            vai.writeObject(enviaDados);
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-            vai.flush();
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-            /*
-            if (opcao > 0 && opcao < 6) {
-            if (msg.equals("1") || msg.equals("3")) {
-            try {
-            System.out.println("Digite o código: ");
-            Integer cod = Integer.parseInt(reader.readLine());
-            System.out.println("Digite a marca: ");
-            String marca = reader.readLine();
-            System.out.println("Digite o modelo: ");
-            String modelo = reader.readLine();
-            System.out.println("Digite o ano: ");
-            Integer ano = Integer.parseInt(reader.readLine());
-            System.out.println("Digite o potencia: ");
-            float potencia = Float.parseFloat(reader.readLine());
-            System.out.println("Digite o carga: ");
-            float carga = Float.parseFloat(reader.readLine());
-            System.out.println("Digite o complemento: ");
-            String complemento = reader.readLine();
-            carro = new Carro(cod, marca, modelo, ano, potencia, carga, complemento);
-            } catch (Exception e) {
-            System.out.println("Não conseguiu criar carro");
-            }
-            } else if (msg.equals("4")) {
-            System.out.println("Digite o código do carro a deletar: ");
-            try {
-            Integer cod = Integer.parseInt(reader.readLine());
-            carro = new Carro(cod);
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            } else if (msg.equals("2")) {
-            System.out.println("Digite o código do carro a consultar: ");
-            try {
-            Integer cod = Integer.parseInt(reader.readLine());
-            carro = new Carro(cod);
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            } else if (msg.equals("5")) {
-            try {
-            System.out.println("Digite o modelo: ");
-            String modelo = reader.readLine();
-            System.out.println("Digite o ano: ");
-            Integer ano = Integer.parseInt(reader.readLine());
-            carro = new Carro(modelo, ano);
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }
-            enviaDados = new EnviaDados(msg, carro);
-            try {
-            vai.writeObject(enviaDados);
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-            vai.flush();
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Enviou mensagem");
-            }
-            if (opcao > 0 && opcao < 7) {
-            try {
-            enviaDadosVolta = (EnviaDados) vem.readObject();
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }            
-            if (opcao > 0 && opcao < 5) {
-            if(msg.equals("2"))
-            System.out.println(enviaDadosVolta.getCarro());
-            else
-            System.out.println(enviaDadosVolta.getDados());
-            }
-            if (msg.equals("5") || msg.equals("6")) {
-            for (Carro car : enviaDadosVolta.getListaCarro()) {
-            System.out.println(car);
-            }
-            }
-            if (msg.equals("7")) {
-            try {
-            s.close();
-            break;
-            } catch (IOException ex) {
-            Logger.getLogger(TCP.Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }*/
         }
-        
-        /*System.out.println("Cliente Iniciado");
-        Scanner entrada = new Scanner (System.in);
-        System.out.println("Digite o comando:");
-        String msg = new String(entrada.nextLine());
-        String msg2;
-        
-        InetAddress end = InetAddress.getByName(host);
-        buf = msg.getBytes();
-        DatagramSocket soc = new DatagramSocket();
-        DatagramPacket pct = new DatagramPacket(buf, buf.length, end, port);
-        soc.send(pct);
-        System.out.println("Mensagem Enviada !!!");
-        
-        DatagramPacket pct2 = new DatagramPacket(buf2, buf2.length);
-        soc.receive(pct2);
-        msg2 = new String(pct2.getData());
-        
-        System.out.println("Cliente Recebeu do servidor: " + msg2);
-        
-        soc.close();*/
-        
-        
     }
 }
