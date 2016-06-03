@@ -6,6 +6,14 @@
 package REST;
 
 // Plain old Java Object it does not extend as class or implements 
+import BD.OperacoesBD;
+import Entidades.Carro;
+import com.google.gson.Gson;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -22,22 +30,43 @@ public class RestWS {
 
     @Path("/inserirCarro")
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    public String inserirCarro(String teste) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_HTML)
+    public String inserirCarro(String json) {
 
-        System.out.println("REST WS recebeu: "+teste);
+        Gson gson = new Gson();
+
+        Carro car = gson.fromJson(json, Carro.class);
+
+        if(car.getComplemento().equals("")){
+            car.setComplemento(null);
+        }
         
-        return "OK";
+        try {
+            OperacoesBD.adicionaCarro(car);
+            return "OK";
+        } catch (SQLException ex) {
+            return "Error";
+        }
+
         
-//        switch (funcao) {
-//            case "getTodos":
-//                retorno = getTodos();
-//                return retorno;
-//                
-//            case "getById":
-//                retorno = getById(id);
-//                return retorno;
-//        }
+
+    }
+
+    @Path("/getTodos")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getTodos() throws SQLException {
+
+        List<Carro> lista = new ArrayList();
+        lista = OperacoesBD.listaCarro();
+
+        Carro car = new Carro();
+
+        String retorno = new Gson().toJson(lista);
+
+        System.out.println("retorno: "+retorno);
+        return retorno;
 
     }
 
