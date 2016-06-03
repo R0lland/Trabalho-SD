@@ -161,7 +161,7 @@ public class Cliente {
                 }
             }
             
-            if(enviaDadosVolta.getOperacao() == 9)//Se der erro em alguma operaçao, retornará valor 9 e uma mensagem.
+            if(enviaDadosVolta.getOperacao() != null)//Se der erro em alguma operaçao, retornará valor 9 e uma mensagem.
             {
                 System.out.println(enviaDadosVolta.getMsg());
                 continue;
