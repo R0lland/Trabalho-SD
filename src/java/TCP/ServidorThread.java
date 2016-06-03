@@ -16,7 +16,7 @@ public class ServidorThread {
         ServerSocket ss;
         ss = new ServerSocket(porta);
 
-        while (true) {
+        while (true) {// Enquanto for true recebe requisicoes do cliente
 
             Socket s = ss.accept();
             System.out.println("Conexão iniciada com o cliente "
