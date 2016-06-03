@@ -9,13 +9,16 @@ package REST;
 import BD.OperacoesBD;
 import Entidades.Carro;
 import com.google.gson.Gson;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -38,18 +41,16 @@ public class RestWS {
 
         Carro car = gson.fromJson(json, Carro.class);
 
-        if(car.getComplemento().equals("")){
+        if (car.getComplemento().equals("")) {
             car.setComplemento(null);
         }
-        
+
         try {
             OperacoesBD.adicionaCarro(car);
             return "OK";
         } catch (SQLException ex) {
             return "Error";
         }
-
-        
 
     }
 
@@ -65,8 +66,27 @@ public class RestWS {
 
         String retorno = new Gson().toJson(lista);
 
-        System.out.println("retorno: "+retorno);
         return retorno;
+
+    }
+
+    @Path("/excluirCarro/{codigo}")
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    public String excluirCarro(@PathParam("codigo") Integer codigo) throws SQLException {
+
+        System.out.println("codcarro: " + codigo);
+
+        Carro car = new Carro();
+        
+        car.setCodigo(codigo);
+        
+        try {
+            OperacoesBD.deletaCarro(car);
+            return "OK";
+        } catch (SQLException ex) {
+            return "Error";
+        }
 
     }
 
