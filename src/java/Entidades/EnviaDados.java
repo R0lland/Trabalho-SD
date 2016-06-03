@@ -46,6 +46,11 @@ public class EnviaDados implements Serializable{
         this.carro = carro;
     }
 
+    public EnviaDados(Integer operacao, String msg) {
+        this.operacao = operacao;
+        this.msg = msg;
+    }
+
     /**
      * @return the operacao
      */

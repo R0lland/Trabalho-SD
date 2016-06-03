@@ -25,6 +25,7 @@ public class Cliente {
         String msg = new String();
         EnviaDados enviaDados = null;
         EnviaDados enviaDadosVolta = null;
+        Integer opcao;
         Socket s = null;
         Carro carro = null;
         List<Carro> lista = null;
@@ -62,10 +63,19 @@ public class Cliente {
             System.out.println("7 - Encerrar Conexão");
             try {
                 msg = reader.readLine();
-            } catch (IOException ex) {
-                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                System.out.println("Insira a operacao");
+                continue;
+                //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Integer opcao = Integer.parseInt(msg);
+            try
+            {
+                opcao = Integer.parseInt(msg);
+            }catch (Exception ex) {
+                System.out.println("Insira a operacao");
+                continue;
+            }
+            
 
             if (opcao > 7 || opcao < 1) {
                 System.out.println("Opção invalida");
@@ -90,23 +100,29 @@ public class Cliente {
                         String complemento = reader.readLine();
                         carro = new Carro(cod, marca, modelo, ano, potencia, carga, complemento);
                     } catch (Exception e) {
-                        System.out.println("Não conseguiu criar carro");
+                        System.out.println("Dados invalidos, tente novamente");
+                        continue;
                     }
                 } else if (msg.equals("4")) {
                     System.out.println("Digite o código do carro a deletar: ");
                     try {
                         Integer cod = Integer.parseInt(reader.readLine());
                         carro = new Carro(cod);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        System.out.println("Digite um codigo valido");
+                        continue;
+                        //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                        
                     }
                 } else if (msg.equals("2")) {
                     System.out.println("Digite o código do carro a consultar: ");
                     try {
                         Integer cod = Integer.parseInt(reader.readLine());
                         carro = new Carro(cod);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        System.out.println("Digite um codigo valido");
+                        continue;
+                        //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 } else if (msg.equals("5")) {
                     try {
@@ -115,8 +131,10 @@ public class Cliente {
                         System.out.println("Digite o ano: ");
                         Integer ano = Integer.parseInt(reader.readLine());
                         carro = new Carro(modelo, ano);
-                    } catch (IOException ex) {
-                        Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
+                        System.out.println("Dados Invalidos");
+                        continue;
+                        //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 enviaDados = new EnviaDados(opcao, carro);
@@ -141,6 +159,12 @@ public class Cliente {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+            
+            if(enviaDadosVolta.getOperacao() != null)//Se der erro em alguma operaçao, retornará valor 9 e uma mensagem.
+            {
+                System.out.println(enviaDadosVolta.getMsg());
+                continue;
             }
             
             if (opcao > 0 && opcao < 5) {
