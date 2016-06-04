@@ -6,69 +6,42 @@
 package TCP;
 
 import BD.OperacoesBD;
-import java.io.IOException;
 import Entidades.Carro;
-import Entidades.EnviaDados;
-import com.sun.org.apache.bcel.internal.Constants;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ServidorAndroid {
 
- 
-    public static void main(String[] args) {
-        int porta = 4444;
-        Carro carro = null;
-        
-        String sVem = null;
-        String sVai = null;
-        
-        String resposta;
 
-        System.out.println("Servidor Executando");
-        ServerSocket ss = null;//cria o socket do servidor
+public class ThreadConexaoAndroid extends Thread{
+    Socket s;
+    ObjectInputStream vem;
+    ObjectOutputStream vai;
+    String resposta;
+    String sVem;
+    Carro carro;
+
+    public ThreadConexaoAndroid(Socket s, InputStream vem, OutputStream vai) {
+        this.s = s;
         try {
-            ss = new ServerSocket(porta);
+            this.vem = new ObjectInputStream(s.getInputStream());
         } catch (IOException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-        
-        Socket s = null;//cria socket para comunicaçao do cliente. cada vez que um cliente comunica cria novo socket.
-        try {
-            s = ss.accept();
-        } catch (IOException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThreadConexao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        System.out.println("Conexão iniciada com o cliente "
-                    + s.getInetAddress().getHostAddress() + ":" + s.getPort());
-
-        ObjectInputStream vem = null;//objeto que vai receber do cliente
         try {
-            vem = new ObjectInputStream(s.getInputStream());
+            this.vai = new ObjectOutputStream(s.getOutputStream());
         } catch (IOException ex) {
-            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ThreadConexao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        ObjectOutputStream vai = null;//objeto q vai mandar para o servidor
-        try {
-            vai = new ObjectOutputStream(s.getOutputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        while (true) {
-            System.out.println("Aguardando Operacao ...");
-            
-            //ler o objeto que vira do cliente
+    }
+    public void run() {
+        while (true) {            
             try {
                 sVem = (String) vem.readObject();
             } catch (IOException ex) {
@@ -92,10 +65,7 @@ public class ServidorAndroid {
             } catch (SQLException ex) {
                 resposta = new String("Codigo ja existente");
                 Logger.getLogger(ServidorAndroid.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-            
+            }           
             
             try {
                 vai.writeObject(resposta);
@@ -108,6 +78,9 @@ public class ServidorAndroid {
                 Logger.getLogger(ServidorAndroid.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
+                System.out.println("Cliente Android " +
+                            s.getInetAddress().getHostAddress() + ":" + s.getPort() + " encerrou a conexao");
+                    s.close();
                 s.close();
                 break;
             } catch (IOException ex) {
@@ -115,4 +88,6 @@ public class ServidorAndroid {
             }
         }
     }
+    
+    
 }
