@@ -7,10 +7,8 @@ package UDP;
 import Entidades.Carro;
 import Entidades.EnviaDados;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -39,7 +37,7 @@ public class Cliente {
         List<Carro> lista = null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String sc;
-        while (true) {
+        while (true) {// retirar while, tem que encerrar execuçao no final da consulta
             //opcao = null;
             while (true){
                 while(true){

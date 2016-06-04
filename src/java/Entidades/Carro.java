@@ -138,7 +138,19 @@ public class Carro implements Serializable{
      */
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    
+    
     }
+    public String toString(Carro carro){
+        return carro.getCodigo() + ":" +
+               carro.getMarca() + ":" +
+               carro.getModelo() + ":" +
+               carro.getAno() + ":" +
+               carro.getPotencia() + ":" +
+               carro.getCarga() + ":" +
+               carro.getComplemento();
+    }
+    
     
     
 }
