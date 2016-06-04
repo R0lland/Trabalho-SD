@@ -13,6 +13,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -31,6 +33,8 @@ public class RetiraFila extends Thread{
     }
 
     public void run(){
+        int portaServidor = 2010;
+        DatagramSocket soc;
         DatagramPacket pacote;
         String dadosRecebidos;
         byte buf[] = new byte[100];
@@ -48,30 +52,61 @@ public class RetiraFila extends Thread{
               
                 dadosRecebidos = new String(pacote.getData());
 //                System.out.println(dadosRecebidos);
-                
+                System.out.println("1");
 
 //                  separando a string sEnviaDados 
 //                  que é o pacote que veio pelo udp
                 String[] parts = dadosRecebidos.split(":");
-//                System.out.println("\n\n | " + parts[0] + " | " +
-//                                           parts[1] + " | " +
-//                                           parts[2] + " | " +
-//                                           parts[3] + " | " +
-//                                           parts[4] + " | " + 
-//                                           parts[5] + " | " +
-//                                           parts[6] + " | " +
-//                                           parts[7]);
+                System.out.println("\n\n | " + parts[0] + " | " +
+                                           parts[1] + " | " +
+                                           parts[2] + " | " +
+                                           parts[3] + " | " +
+                                           parts[4] + " | " + 
+                                           parts[5] + " | " +
+                                           parts[6] + " | " +
+                                           parts[7]);
            
 //              colocando os dados no objeto carro
+                System.out.println("3");
                 carro = new Carro();
                 opcao = Integer.parseInt(parts[0]);
-                carro.setCodigo(Integer.parseInt(parts[1]));
-                carro.setMarca(parts[2]);
-                carro.setModelo(parts[3]);
-                carro.setAno(Integer.parseInt(parts[4]));
-                carro.setPotencia(Float.parseFloat(parts[5]));
-                carro.setCarga(Float.parseFloat(parts[6]));
-                carro.setComplemento(parts[7]);
+//                carro.setCodigo(Integer.parseInt(parts[1]));
+//                carro.setMarca(parts[2]);
+//                carro.setModelo(parts[3]);
+//                carro.setAno(Integer.parseInt(parts[4]));
+//                carro.setPotencia(Float.parseFloat(parts[5]));
+//                carro.setCarga(Float.parseFloat(parts[6]));
+//                carro.setComplemento(parts[7]);
+                
+                carro.setCodigo(1);
+                carro.setMarca("volks");
+                carro.setModelo("gol");
+                carro.setAno(2000);
+                carro.setPotencia(5);
+                carro.setCarga(4);
+                carro.setComplemento("azul");
+                
+                System.out.println("2");
+                
+//                String msg2 = ("Retorno do servidor");
+//                
+//                try {
+//                    soc = new DatagramSocket(portaServidor);
+//                    buf = msg2.getBytes();
+//                    DatagramPacket pct2 = new DatagramPacket(buf, buf.length, pacote.getAddress(), pacote.getPort());
+//                    try {
+//                        soc.send(pct2);
+//                        soc.close();
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//
+//                    System.out.println("Servidor Respondeu");
+//                } catch (SocketException ex) {
+//                    Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                
+                
                 
                 if (opcao > 0 && opcao < 7) 
                 {
@@ -79,7 +114,7 @@ public class RetiraFila extends Thread{
                         try {
                             OperacoesBD.adicionaCarro(carro);
                         } catch (SQLException ex) {
-                            Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println(ex.getMessage());
                         }
                         System.out.println("Inseriu");
                         // envia devolta pro cliente
@@ -105,8 +140,8 @@ public class RetiraFila extends Thread{
                         try {
                             OperacoesBD.alteraCarro(carro);
                         } catch (SQLException ex) {
-                            Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                           Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                       }
                         System.out.println("Alterou");
                         retornaDados = ("Alterou");
                     }
@@ -125,7 +160,7 @@ public class RetiraFila extends Thread{
                         } catch (SQLException ex) {
                             Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
                         }
-//                        
+                        
 //                        retornaDados = new EnviaDados(listaCarro);
                     }
                     if (opcao == 6) {
@@ -134,7 +169,7 @@ public class RetiraFila extends Thread{
                         } catch (SQLException ex) {
                             Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
                         }
-//                        
+                      
 //                        retornaDados = new EnviaDados(listaCarro);
                     }
                     
