@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ public class RetiraFila extends Thread{
     public void run(){
         DatagramPacket pacote;
         String dadosRecebidos;
-        byte[] buf = new byte[1000];
+        byte[] buf;
         Carro carro;
         Carro carroVem;
         int opcao;
@@ -52,107 +53,127 @@ public class RetiraFila extends Thread{
 //              separando a string sEnviaDados 
 //              que é o pacote que veio pelo udp
                 String[] parts = dadosRecebidos.split(":");
-                System.out.println( parts[0] + "\n" +
-                                           parts[1] + "\n" +
-                                           parts[2] + "\n" +
-                                           parts[3] + "\n" +
-                                           parts[4] + "\n" + 
-                                           parts[5] + "\n" +
-                                           parts[6] + "\n" +
-                                           parts[7]);
+//                System.out.println( parts[0] + "\n" +
+//                                           parts[1] + "\n" +
+//                                           parts[2] + "\n" +
+//                                           parts[3] + "\n" +
+//                                           parts[4] + "\n" + 
+//                                           parts[5] + "\n" +
+//                                           parts[6] + "\n" +
+//                                           parts[7]);
                 
                 opcao = Integer.parseInt(parts[0]);
                 carro = new Carro();
-                carro.setCodigo(Integer.parseInt(parts[1]));
-                carro.setMarca(parts[2]);
-                carro.setModelo(parts[3]);
-                carro.setAno(Integer.parseInt(parts[4]));
-                carro.setPotencia(Float.parseFloat(parts[5]));
-                carro.setCarga(Float.parseFloat(parts[6]));
-                carro.setComplemento(parts[7]);
+                if(!"null".equals(parts[1])){
+                    carro.setCodigo(Integer.parseInt(parts[1]));
+                }
                 
-                if (opcao > 0 && opcao < 7) 
-                {
-                    if (opcao == 1) {
+                if(!"null".equals(parts[2])){
+                    carro.setMarca(parts[2]);
+                }
+                
+                if(!"null".equals(parts[3])){
+                    carro.setModelo(parts[3]);
+                }
+                
+                if(!"null".equals(parts[4])){
+                    carro.setAno(Integer.parseInt(parts[4]));
+                }
+                
+                if(!"null".equals(parts[5])){
+                    carro.setPotencia(Float.parseFloat(parts[5]));
+                }
+                
+                if(!"null".equals(parts[6])){
+                    carro.setCarga(Float.parseFloat(parts[6]));
+                }
+                
+                if(!"null".equals(parts[7])){
+                    carro.setComplemento(parts[7]);
+                }
+                
+                switch (opcao) {
+                    case 1:
                         try {
-                            carro.mostarCarro();
+                            //carro.mostarCarro();
                             OperacoesBD.adicionaCarro(carro);
-                            retornaDados = ("Carro Inserido com sucesso!");
+                            retornaDados = "Carro inserido com sucesso!";
                         } catch (SQLException ex) {
-                            System.out.println(ex.getMessage());
-                            retornaDados = ("Não foi possível inserir os dados");
-                        }
-                    }
-                    if (opcao == 2) {
+                            System.out.println(Servidor.getDataHora() + ex.getMessage());
+                            if(ex.getErrorCode() == 0){
+                                retornaDados = "Não foi possível inserir o carro: Código já utilizado";
+                            }else{
+                                retornaDados = "Não foi possível inserir o carro";
+                            }
+                            
+                        }   break;
+                    case 2:
                         try {
                             carroVem = OperacoesBD.consultaCarro(carro.getCodigo());
                             retornaDados =  carroVem.getCodigo() + ":" +
-                                        carroVem.getMarca() + ":" +
-                                        carroVem.getModelo() + ":" +
-                                        carroVem.getAno() + ":" +
-                                        carroVem.getPotencia() + ":" +
-                                        carroVem.getCarga() + ":" +
-                                        carroVem.getComplemento();
+                                    carroVem.getMarca() + ":" +
+                                    carroVem.getModelo() + ":" +
+                                    carroVem.getAno() + ":" +
+                                    carroVem.getPotencia() + ":" +
+                                    carroVem.getCarga() + ":" +
+                                    carroVem.getComplemento();
+                            System.out.println("Consultou");
                         } catch (SQLException ex) {
-                            Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        System.out.println("Consultou");
-                        
-                    }
-                    if (opcao == 3) {
+                            System.out.println(Servidor.getDataHora() + ex.getMessage());
+                            retornaDados = "Não foi possível fazer a consulta";
+                        }   break;
+                    case 3:
                         try {
                             OperacoesBD.alteraCarro(carro);
+                            retornaDados = "Carro alterado com sucesso!";
                         } catch (SQLException ex) {
-                           Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                       }
-                        System.out.println("Alterou");
-                        retornaDados = ("Alterou");
-                    }
-                    if (opcao == 4) {
+                            System.out.println(Servidor.getDataHora() + ex.getMessage());
+                            retornaDados = "Não foi possível alterar o carro";
+                        }   break;
+                    case 4:
                         try {
                             OperacoesBD.deletaCarro(carro);
+                            retornaDados = "Carro deletado com sucesso!";
                         } catch (SQLException ex) {
-                            Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        System.out.println("Deletou");
-                        retornaDados = ("Deletou");
-                    }
-                    if (opcao == 5) {
+                            System.out.println(Servidor.getDataHora() + ex.getMessage());
+                            retornaDados = "Não foi possível deletar o carro";
+                        }   break;
+                    case 5:
                         try {
                             listaCarro = OperacoesBD.listaAnoModelo(carro.getAno(), carro.getModelo());
                         } catch (SQLException ex) {
-                            Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                            System.out.println(Servidor.getDataHora() + ex.getMessage());
+                            retornaDados = "Não foi possível listar os dados";
                         }
-                        
-//                        retornaDados = new EnviaDados(listaCarro);
-                    }
-                    if (opcao == 6) {
+
+//                          retornaDados = new EnviaDados(listaCarro);
+                        break;
+                    case 6:
                         try {
                             listaCarro = OperacoesBD.listaCarro();
                         } catch (SQLException ex) {
-                            Logger.getLogger(TCP.Servidor.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                      
-//                        retornaDados = new EnviaDados(listaCarro);
-                    }
-                    
-                    System.out.println(retornaDados);
-                    buf = retornaDados.getBytes();
-                    pacote = new DatagramPacket(buf, buf.length, pacote.getAddress(), pacote.getPort());
-                    try {
-                        serverSocket.send(pacote);
-                        System.out.println(Servidor.getDataHora() + "Servidor Respondeu para " + pacote.getAddress() + ":" + pacote.getPort());
-                        //serverSocket.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                            System.out.println(Servidor.getDataHora() + ex.getMessage());
+                            retornaDados = "Não foi possível listar os dados";
+                        }   break;
+                    default:
+                        break;
+                }
+
+                System.out.println(retornaDados);
+               
+                buf = retornaDados.getBytes();
+                pacote = new DatagramPacket(buf, buf.length, pacote.getAddress(), pacote.getPort());
+                try {
+                    serverSocket.send(pacote);
+                    System.out.println(Servidor.getDataHora() + "Servidor Respondeu para " + pacote.getAddress() + ":" + pacote.getPort());
+                    //serverSocket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         }
-        
     }
 }
