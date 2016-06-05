@@ -27,11 +27,14 @@ import java.util.logging.Logger;
  */
 public class RetiraFila extends Thread{
     private final BlockingBuffer fila;
+    private final DatagramSocket serverSocket;
     
-    public RetiraFila(BlockingBuffer f){
+    public RetiraFila(BlockingBuffer f, DatagramSocket soc){
         fila = f;
+        serverSocket = soc;
     }
 
+    @Override
     public void run(){
         int portaServidor = 2010;
         DatagramSocket soc;
@@ -41,7 +44,7 @@ public class RetiraFila extends Thread{
         Carro carro;
         Carro carroVem;
         int opcao;
-        String retornaDados;
+        String retornaDados = null;
         List<Carro> listaCarro = null;
         
         while (true) {                
@@ -52,41 +55,29 @@ public class RetiraFila extends Thread{
               
                 dadosRecebidos = new String(pacote.getData());
 //                System.out.println(dadosRecebidos);
-                System.out.println("1");
 
 //                  separando a string sEnviaDados 
 //                  que é o pacote que veio pelo udp
                 String[] parts = dadosRecebidos.split(":");
-                System.out.println("\n\n | " + parts[0] + " | " +
-                                           parts[1] + " | " +
-                                           parts[2] + " | " +
-                                           parts[3] + " | " +
-                                           parts[4] + " | " + 
-                                           parts[5] + " | " +
-                                           parts[6] + " | " +
+                System.out.println( parts[0] + "\n" +
+                                           parts[1] + "\n" +
+                                           parts[2] + "\n" +
+                                           parts[3] + "\n" +
+                                           parts[4] + "\n" + 
+                                           parts[5] + "\n" +
+                                           parts[6] + "\n" +
                                            parts[7]);
-           
-//              colocando os dados no objeto carro
-                System.out.println("3");
-                carro = new Carro();
+                
                 opcao = Integer.parseInt(parts[0]);
-//                carro.setCodigo(Integer.parseInt(parts[1]));
-//                carro.setMarca(parts[2]);
-//                carro.setModelo(parts[3]);
-//                carro.setAno(Integer.parseInt(parts[4]));
-//                carro.setPotencia(Float.parseFloat(parts[5]));
-//                carro.setCarga(Float.parseFloat(parts[6]));
-//                carro.setComplemento(parts[7]);
-                
-                carro.setCodigo(1);
-                carro.setMarca("volks");
-                carro.setModelo("gol");
-                carro.setAno(2000);
-                carro.setPotencia(5);
-                carro.setCarga(4);
-                carro.setComplemento("azul");
-                
-                System.out.println("2");
+//              colocando os dados no objeto carro
+                carro = new Carro();
+                carro.setCodigo(Integer.parseInt(parts[1]));
+                carro.setMarca(parts[2]);
+                carro.setModelo(parts[3]);
+                carro.setAno(Integer.parseInt(parts[4]));
+                carro.setPotencia(Float.parseFloat(parts[5]));
+                carro.setCarga(Float.parseFloat(parts[6]));
+                carro.setComplemento(parts[7]);
                 
 //                String msg2 = ("Retorno do servidor");
 //                
@@ -112,13 +103,13 @@ public class RetiraFila extends Thread{
                 {
                     if (opcao == 1) {
                         try {
+                            carro.mostarCarro();
                             OperacoesBD.adicionaCarro(carro);
+                            retornaDados = ("Carro Inserido com sucesso!");
                         } catch (SQLException ex) {
                             System.out.println(ex.getMessage());
+                            retornaDados = ("Não foi possível inserir os dados");
                         }
-                        System.out.println("Inseriu");
-                        // envia devolta pro cliente
-                        retornaDados = ("Inseriu");
                     }
                     if (opcao == 2) {
                         try {
@@ -173,14 +164,21 @@ public class RetiraFila extends Thread{
 //                        retornaDados = new EnviaDados(listaCarro);
                     }
                     
-//                        implementar devoluçao
+                    System.out.println(retornaDados);
+                    buf = retornaDados.getBytes();
+                    pacote = new DatagramPacket(buf, buf.length, pacote.getAddress(), pacote.getPort());
+                    try {
+                        serverSocket.send(pacote);
+                        //serverSocket.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println("Servidor Respondeu");
                 }
                 
             } catch (InterruptedException ex) {
                 Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-            
-            
+            }
             
         }
         

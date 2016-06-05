@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,41 +18,35 @@ import java.util.logging.Logger;
  */
 public class EnviaFila extends Thread{
     private final BlockingBuffer fila;
+    private final DatagramSocket serverSocket;
     
-    public EnviaFila(BlockingBuffer f){
+    public EnviaFila(BlockingBuffer f, DatagramSocket soc){
         fila = f;
+        serverSocket = soc;
     }
 
     public void run()
     {
-        int portaServidor = 2010;
         byte[] dadosRecebido = new byte[5000];
         
-        DatagramSocket serverSocket;
-        try {
-            serverSocket = new DatagramSocket(portaServidor);
-            System.out.println(Servidor.getDataHora() + "Servidor iniciado");
-            
-            while(true)
-            {
-                System.out.println(Servidor.getDataHora() + "Esperando requisição");
-                DatagramPacket receivePacket = new DatagramPacket(dadosRecebido, dadosRecebido.length);
+        System.out.println(Servidor.getDataHora() + "Servidor iniciado");
+        while(true)
+        {
+            System.out.println(Servidor.getDataHora() + "Esperando requisição");
+            DatagramPacket receivePacket = new DatagramPacket(dadosRecebido, dadosRecebido.length);
+            try {
+                serverSocket.receive(receivePacket);
+                System.out.println(Servidor.getDataHora() + "Pacote Recebido de " + receivePacket.getAddress());
                 try {
-                    serverSocket.receive(receivePacket);
-                    System.out.println(Servidor.getDataHora() + "Pacote Recebido de " + receivePacket.getAddress());
-                    try {
-                        fila.insere(receivePacket);
-                        System.out.println(Servidor.getDataHora() + "Pacote adicionado na fila");
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(EnviaFila.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                
-                } catch (IOException ex) {
+                    fila.insere(receivePacket);
+                    System.out.println(Servidor.getDataHora() + "Pacote adicionado na fila");
+                } catch (InterruptedException ex) {
                     Logger.getLogger(EnviaFila.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
+            } catch (IOException ex) {
+                Logger.getLogger(EnviaFila.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SocketException ex) {
-            Logger.getLogger(EnviaFila.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

@@ -20,10 +20,9 @@ import java.util.logging.Logger;
 public class Cliente {
 
     public static void main(String[] args) throws Exception{
-        byte buf[];
-        byte buf2[] = new byte[1000];
+        byte buf[] = new byte[1000];
         String sEnviaDados;
-        String recebeDadosString;
+        String resposta;
         String host = "localhost";
         int port = 2010;
         InetAddress enderecoServidor = InetAddress.getByName(host);
@@ -175,12 +174,12 @@ public class Cliente {
             
             System.out.println("Enviou mensagem");
             
-//                      receber de volta do servidor
-//            DatagramPacket pct2 = new DatagramPacket(buf2, buf2.length);
-//            soc.receive(pct2);
-//            recebeDadosString = new String(pct2.getData());
-            
-            
+            //resposta do
+            soc.receive(pct);
+            resposta = new String(pct.getData());
+
+            System.out.println("Cliente Recebeu do servidor: " + resposta);
+            soc.close();            
         }
     }
 }

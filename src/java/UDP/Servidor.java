@@ -5,35 +5,33 @@
  */
 package UDP;
 
-import Entidades.Carro;
 import java.io.IOException;
-import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Servidor {
     
     public static void main(String[] args) throws InterruptedException, IOException{
-        Carro carro;
-        String sEnviaDados;
+        int tamanhoFila = 10;
+        int portaServidor = 2010;
+        DatagramSocket serverSocket;
+        
         //create new thread pool with two threads
         ExecutorService application = Executors.newCachedThreadPool();
         
-        int tamanhoFila = 10;
         //create BlockingBuffer to store DatagramPacket
-        BlockingBuffer sharedLocation = new BlockingBuffer(tamanhoFila);
+        BlockingBuffer filaCompartilhada = new BlockingBuffer(tamanhoFila);
         
-        application.execute(new EnviaFila(sharedLocation));
-        application.execute(new RetiraFila(sharedLocation));
+        serverSocket = new DatagramSocket(portaServidor);
+        
+        application.execute(new EnviaFila(filaCompartilhada, serverSocket));
+        
+        application.execute(new RetiraFila(filaCompartilhada, serverSocket));
         
         application.shutdown();
-        
-
-   
     }
     
     public static String getDataHora(){

@@ -22,12 +22,12 @@ public class BlockingBuffer {
     
     public void insere( DatagramPacket pacote ) throws InterruptedException{
         buffer.put(pacote);
-        System.out.println("Pacote Inserido na Fila!");
+        //System.out.println("Pacote Inserido na Fila!");
     }
     
     public DatagramPacket retira() throws InterruptedException{
         DatagramPacket pacote = buffer.take();
-        System.out.println("Pacote retirado da Fila!");
+        //System.out.println("Pacote retirado da Fila!");
         
         return pacote;
     }
