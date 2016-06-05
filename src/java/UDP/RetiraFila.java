@@ -7,17 +7,11 @@ package UDP;
 
 import BD.OperacoesBD;
 import Entidades.Carro;
-import Entidades.EnviaDados;
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,11 +30,9 @@ public class RetiraFila extends Thread{
 
     @Override
     public void run(){
-        int portaServidor = 2010;
-        DatagramSocket soc;
         DatagramPacket pacote;
         String dadosRecebidos;
-        byte buf[] = new byte[100];
+        byte[] buf = new byte[1000];
         Carro carro;
         Carro carroVem;
         int opcao;
@@ -54,10 +46,11 @@ public class RetiraFila extends Thread{
                 System.out.println(Servidor.getDataHora() + "Pacote retirado da fila");
               
                 dadosRecebidos = new String(pacote.getData());
-//                System.out.println(dadosRecebidos);
-
-//                  separando a string sEnviaDados 
-//                  que é o pacote que veio pelo udp
+                //linha adicionado para resolver erro -> ERROR: invalid byte sequence for encoding "UTF8": 0x00
+                dadosRecebidos = dadosRecebidos.replaceAll("\0", "");
+//              System.out.println(dadosRecebidos);
+//              separando a string sEnviaDados 
+//              que é o pacote que veio pelo udp
                 String[] parts = dadosRecebidos.split(":");
                 System.out.println( parts[0] + "\n" +
                                            parts[1] + "\n" +
@@ -69,7 +62,6 @@ public class RetiraFila extends Thread{
                                            parts[7]);
                 
                 opcao = Integer.parseInt(parts[0]);
-//              colocando os dados no objeto carro
                 carro = new Carro();
                 carro.setCodigo(Integer.parseInt(parts[1]));
                 carro.setMarca(parts[2]);
@@ -78,26 +70,6 @@ public class RetiraFila extends Thread{
                 carro.setPotencia(Float.parseFloat(parts[5]));
                 carro.setCarga(Float.parseFloat(parts[6]));
                 carro.setComplemento(parts[7]);
-                
-//                String msg2 = ("Retorno do servidor");
-//                
-//                try {
-//                    soc = new DatagramSocket(portaServidor);
-//                    buf = msg2.getBytes();
-//                    DatagramPacket pct2 = new DatagramPacket(buf, buf.length, pacote.getAddress(), pacote.getPort());
-//                    try {
-//                        soc.send(pct2);
-//                        soc.close();
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//
-//                    System.out.println("Servidor Respondeu");
-//                } catch (SocketException ex) {
-//                    Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                
-                
                 
                 if (opcao > 0 && opcao < 7) 
                 {
@@ -169,11 +141,11 @@ public class RetiraFila extends Thread{
                     pacote = new DatagramPacket(buf, buf.length, pacote.getAddress(), pacote.getPort());
                     try {
                         serverSocket.send(pacote);
+                        System.out.println(Servidor.getDataHora() + "Servidor Respondeu para " + pacote.getAddress() + ":" + pacote.getPort());
                         //serverSocket.close();
                     } catch (IOException ex) {
                         Logger.getLogger(RetiraFila.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    System.out.println("Servidor Respondeu");
                 }
                 
             } catch (InterruptedException ex) {

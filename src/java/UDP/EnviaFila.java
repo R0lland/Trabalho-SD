@@ -36,7 +36,7 @@ public class EnviaFila extends Thread{
             DatagramPacket receivePacket = new DatagramPacket(dadosRecebido, dadosRecebido.length);
             try {
                 serverSocket.receive(receivePacket);
-                System.out.println(Servidor.getDataHora() + "Pacote Recebido de " + receivePacket.getAddress());
+                System.out.println(Servidor.getDataHora() + "Pacote Recebido de " + receivePacket.getAddress() + ":" + receivePacket.getPort());
                 try {
                     fila.insere(receivePacket);
                     System.out.println(Servidor.getDataHora() + "Pacote adicionado na fila");
