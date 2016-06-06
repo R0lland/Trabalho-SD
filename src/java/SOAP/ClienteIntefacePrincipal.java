@@ -134,7 +134,7 @@ public class ClienteIntefacePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botao_consultaActionPerformed
 
     private void botao_listaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_listaActionPerformed
-        new ClienteInterfaceLista().setVisible(true);
+        new ClienteInterfaceListaAnoModelo().setVisible(true);
 // TODO add your handling code here:
     }//GEN-LAST:event_botao_listaActionPerformed
 
