@@ -7,6 +7,7 @@ package UDP;
 
 import BD.OperacoesBD;
 import Entidades.Carro;
+import Entidades.EnviaDados;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -37,11 +38,13 @@ public class RetiraFila extends Thread{
         Carro carro;
         Carro carroVem;
         int opcao;
-        String retornaDados = null;
+        String retornaDados;
+        EnviaDados enviaDados;
         List<Carro> listaCarro = null;
         
         while (true) {                
             try {    
+                retornaDados = null;
                 System.out.println(Servidor.getDataHora() + "Aguardando Pacote");
                 pacote = fila.retira();
                 System.out.println(Servidor.getDataHora() + "Pacote retirado da fila");
@@ -141,20 +144,41 @@ public class RetiraFila extends Thread{
                     case 5:
                         try {
                             listaCarro = OperacoesBD.listaAnoModelo(carro.getAno(), carro.getModelo());
+                            enviaDados = new EnviaDados(listaCarro);
+                            for (Carro car : enviaDados.getListaCarro()) {
+                                retornaDados = retornaDados + "-" + 
+                                               car.getCodigo() + ":" +
+                                               car.getMarca()+ ":" +
+                                               car.getModelo()+ ":" +
+                                               car.getAno()+ ":" +
+                                               car.getCarga()+ ":" +
+                                               car.getPotencia()+ ":" +
+                                               car.getComplemento();
+                            }
+//                            System.out.println("oi");
                         } catch (SQLException ex) {
+                            System.out.println("oiiiii");
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             retornaDados = "Não foi possível listar os dados";
-                        }
-
-//                          retornaDados = new EnviaDados(listaCarro);
-                        break;
+                        } break;
                     case 6:
                         try {
                             listaCarro = OperacoesBD.listaCarro();
+                            enviaDados = new EnviaDados(listaCarro);
+                            for (Carro car : enviaDados.getListaCarro()) {
+                                retornaDados = retornaDados + "-" + 
+                                               car.getCodigo() + ":" +
+                                               car.getMarca()+ ":" +
+                                               car.getModelo()+ ":" +
+                                               car.getAno()+ ":" +
+                                               car.getCarga()+ ":" +
+                                               car.getPotencia()+ ":" +
+                                               car.getComplemento();
+                            }
                         } catch (SQLException ex) {
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             retornaDados = "Não foi possível listar os dados";
-                        }   break;
+                        } break;
                     default:
                         break;
                 }
