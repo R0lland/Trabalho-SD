@@ -108,7 +108,6 @@ public class Testes extends OperacoesBD{
             
         /*---------------------------------------------------------------------------------------------------------*/
         
-            /*CONSULTA UM CARRO......
             
             Carro car = new Carro();
             
@@ -120,7 +119,6 @@ public class Testes extends OperacoesBD{
             Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("NAO ACHOU ESSE CARRO!!");
             }
-            */
             
             
             /*--------------------------------------------------------------------------------------*/

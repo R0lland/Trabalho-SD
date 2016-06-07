@@ -21,6 +21,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -74,39 +75,29 @@ public class RestWS {
         List<Carro> lista = new ArrayList();
         lista = OperacoesBD.listaCarro();
 
-        Carro car = new Carro();
-
         String retorno = new Gson().toJson(lista);
 
         return retorno;
 
     }
 
-    @Path("/consultaPor/{consultaPor}/valor/{valor}")
-    @GET
+    @Path("/alterarCarro/{codigo}")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String consultaPor(@PathParam("consultaPor") String consultaPor, @PathParam("valor") String valor) throws SQLException {
+    public String alterarCarro(@PathParam("codigo") Integer codigo, String data) throws SQLException {
 
-        switch (consultaPor) {
-            case "codigo":
-                
-                Carro car = OperacoesBD.consultaCarro(Integer.parseInt(valor));
-                return new Gson().toJson(car);
-                
-            case "marca":
-                break;
-            case "modelo":
-                break;
-            case "ano":
-                break;
-            case "potencia":
-                break;
-            case "carga":
-                break;
+        Carro car = new Gson().fromJson(data, Carro.class);
+        car.setCodigo(codigo);
+
+        try {
+            OperacoesBD.alteraCarro(car);
+
+            return "OK";
+        } catch (SQLException ex) {
+
+            return "Error";
         }
-
-        return null;
-
     }
 
     @Path("/excluirCarro/{codigo}")
@@ -153,6 +144,26 @@ public class RestWS {
         return flag;
     }
 
+    @Path("/listarAnoModelo")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String listarAnoModelo(String json) throws SQLException {
+
+        Carro car = new Gson().fromJson(json, Carro.class);
+
+        Integer ano = car.getAno();
+        String modelo = car.getModelo();
+
+        List<Carro> lista = OperacoesBD.listaAnoModeloRest(ano, modelo);
+        
+        System.out.println("SIZE: "+lista.size());
+        
+        if(lista.isEmpty()){
+            String retorno = "existe";
+            return new Gson().toJson(retorno);
+        }else{
+            return new Gson().toJson(lista);
+        }
+        
+    }
 }
-
-
