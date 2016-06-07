@@ -26,6 +26,7 @@ public class Cliente {
         byte[] buf2 = new byte[1000];
         String sEnviaDados;
         String resposta;
+        String[] parts;
         String host = "localhost";
         int port = 2010;
         InetAddress enderecoServidor = null;
@@ -172,7 +173,7 @@ public class Cliente {
                       carro.getPotencia() + ":" +
                       carro.getCarga() + ":" +
                       carro.getComplemento();
-        System.out.println(sEnviaDados);
+//        System.out.println(sEnviaDados);
         buf1 = sEnviaDados.getBytes();
         
         try {
@@ -185,7 +186,38 @@ public class Cliente {
             pct = new DatagramPacket(buf2, buf2.length);
             soc.receive(pct);
             resposta = new String(pct.getData());
-            System.out.println("Cliente Recebeu do servidor:\n" + resposta + "\n");
+            System.out.println("Cliente Recebeu do servidor:\n");
+            
+            if (opcao > 0 && opcao < 5) {
+                if(opcao == 2){
+                    parts = resposta.split(":");
+                    System.out.println( "Codigo      = " + parts[0] + "\n" +
+                                        "Marca       = " + parts[1] + "\n" +
+                                        "Modelo      = " + parts[2] + "\n" +
+                                        "Ano         = " + parts[3] + "\n" +
+                                        "Potencia    = " + parts[4] + "\n" + 
+                                        "Carga       = " + parts[5] + "\n" +
+                                        "Complemento = " + parts[6]);
+                }
+                else
+                    System.out.println(resposta);
+            }
+            
+            if (opcao == 5 || opcao == 6) {
+                parts = resposta.split("-");
+                for( int i = 1; i < parts.length; i++){
+                    System.out.println("\nCarro " + i);
+                    String[] subparts = parts[i].split(":");
+                    System.out.println( "Codigo      = " + subparts[0] + "\n" +
+                                        "Marca       = " + subparts[1] + "\n" +
+                                        "Modelo      = " + subparts[2] + "\n" +
+                                        "Ano         = " + subparts[3] + "\n" +
+                                        "Potencia    = " + subparts[4] + "\n" + 
+                                        "Carga       = " + subparts[5] + "\n" +
+                                        "Complemento = " + subparts[6]);
+                }
+            }
+            
             
             soc.close();
         } catch (SocketException ex) {
