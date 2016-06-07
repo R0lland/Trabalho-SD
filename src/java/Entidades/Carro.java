@@ -138,9 +138,8 @@ public class Carro implements Serializable{
      */
     public void setComplemento(String complemento) {
         this.complemento = complemento;
-    
-    
     }
+    
     public String toString(Carro carro){
         return carro.getCodigo() + ":" +
                carro.getMarca() + ":" +
@@ -151,6 +150,14 @@ public class Carro implements Serializable{
                carro.getComplemento();
     }
     
-    
+    public void mostarCarro(){
+        System.out.println(this.getCodigo());
+        System.out.println(this.getMarca());
+        System.out.println(this.getModelo());
+        System.out.println(this.getAno());
+        System.out.println(this.getPotencia());
+        System.out.println(this.getCarga());
+        System.out.println(this.getComplemento());
+    }
     
 }

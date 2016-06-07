@@ -6,10 +6,8 @@
 package SOAP;
 
 import Entidades.Carro;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -17,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Djéssica Eickstaedt
  */
 public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
-    List<Carro> lista = new List<Carro>();
+    Carro[] lista;
     /**
      * Creates new form ClienteInterfaceAdiciona
      */
@@ -152,10 +150,7 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
     private void botao_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_buscaActionPerformed
         SoapClient cliente = new SoapClient();
         try {
-            lista = cliente.listaAnoModelo(campo_ano, campo_modelo));
-            campo_ano.setText(String.valueOf(carro.getAno()));
-            
-            campo_modelo.setText(carro.getModelo());
+            lista = cliente.listaAnoModelo(Integer.valueOf(campo_ano.toString()), campo_modelo.toString());
             atualizarTabela();
         } catch (Exception ex) {
             Logger.getLogger(ClienteInterfaceListaAnoModelo.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,11 +214,10 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
     private void atualizarTabela() {
         DefaultTableModel dtm = (DefaultTableModel) Tabela.getModel();
         dtm.setRowCount(0);
-        int i = 1;
         for (Carro c : lista) {
             if (c != null) {
-                dtm.addRow(new Object[]{c.getCodigo(), c.getAno(), c.getModelo(), c.getMarca(),
-                    c.getCarga(), c.getPotencia(),, c.getComplemento()});
+                dtm.addRow(new Object[]{c.getCodigo(), c.getAno(), c.getModelo(), c.getMarca(), 
+                    c.getCarga(), c.getPotencia(), c.getComplemento()});
             }
             else
                 dtm.addRow(new Object[]{"","","","","","",""});
