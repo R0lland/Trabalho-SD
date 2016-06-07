@@ -81,6 +81,24 @@ public class RestWS {
 
     }
 
+    @Path("/consultaCodigo/{valor}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String consultaPor(@PathParam("valor") String valor) throws SQLException {
+
+        try {
+            Carro car = OperacoesBD.consultaCarro(Integer.parseInt(valor));
+            return new Gson().toJson(car);
+        } catch (Exception ex) {
+
+            String retorno = "existe";
+
+            return new Gson().toJson(retorno);
+
+        }
+
+    }
+
     @Path("/alterarCarro/{codigo}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -155,15 +173,15 @@ public class RestWS {
         String modelo = car.getModelo();
 
         List<Carro> lista = OperacoesBD.listaAnoModeloRest(ano, modelo);
-        
-        System.out.println("SIZE: "+lista.size());
-        
-        if(lista.isEmpty()){
+
+        System.out.println("SIZE: " + lista.size());
+
+        if (lista.isEmpty()) {
             String retorno = "existe";
             return new Gson().toJson(retorno);
-        }else{
+        } else {
             return new Gson().toJson(lista);
         }
-        
+
     }
 }
