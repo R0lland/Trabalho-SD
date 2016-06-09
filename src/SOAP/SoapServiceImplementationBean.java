@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package SOAP;
 
 import BD.OperacoesBD;
@@ -16,7 +15,7 @@ import javax.jws.WebService;
  *
  * @author Ricardo Deitoz Posser
  */
-@WebService(endpointInterface="SOAP.SoapServiceEndpointInterface")
+@WebService(endpointInterface = "SOAP.SoapServiceEndpointInterface")
 public class SoapServiceImplementationBean implements SoapServiceEndpointInterface {
 
     @Override
@@ -43,7 +42,7 @@ public class SoapServiceImplementationBean implements SoapServiceEndpointInterfa
     public Carro[] listaAnoModelo(Integer ano, String modelo) throws SQLException {
         List<Carro> lista = OperacoesBD.listaAnoModelo(ano, modelo);
         Carro[] array = new Carro[lista.size()];
-             lista.toArray(array);
-         return array;
+        lista.toArray(array);
+        return array;
     }
 }

@@ -6,8 +6,7 @@
 package SOAP;
 
 import Entidades.Carro;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Logs.Logs;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +14,12 @@ import javax.swing.JOptionPane;
  * @author Djéssica Eickstaedt
  */
 public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
+    private String address = "http://127.0.0.1:1991/SOAP";
+
+    public ClienteInterfaceAdiciona(String address) {
+        initComponents();
+        this.address = address;
+    }
 
     /**
      * Creates new form ClienteInterfaceAdiciona
@@ -47,6 +52,7 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
         campo_codigo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         salvar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,14 +119,19 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Adiciona");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(187, Short.MAX_VALUE)
-                .addComponent(salvar)
-                .addGap(150, 150, 150))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(salvar)
+                    .addComponent(jLabel1))
+                .addContainerGap(170, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(18, 18, 18)
@@ -164,7 +175,9 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(252, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
                 .addComponent(salvar)
                 .addGap(25, 25, 25))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,7 +239,7 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
     }//GEN-LAST:event_campo_codigoActionPerformed
 
     private void salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarActionPerformed
-       SoapClient cliente = new SoapClient("http://localhost/SOAP");
+       SoapClient cliente = new SoapClient(address);
        Carro carro = new Carro(
                Integer.parseInt(campo_codigo.getText()), 
                campo_marca.getText(), 
@@ -240,9 +253,10 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
         try {
             cliente.adiciona(carro);
             JOptionPane.showMessageDialog(rootPane, "Carro adicionado com sucesso.");
-
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
+            Logs.out(ex.getMessage().toString());
         }
     }//GEN-LAST:event_salvarActionPerformed
 
@@ -289,6 +303,7 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
     private javax.swing.JTextField campo_marca;
     private javax.swing.JTextField campo_modelo;
     private javax.swing.JTextField campo_potencia;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

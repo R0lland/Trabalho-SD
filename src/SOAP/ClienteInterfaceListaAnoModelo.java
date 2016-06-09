@@ -6,8 +6,10 @@
 package SOAP;
 
 import Entidades.Carro;
+import Logs.Logs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,7 +17,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Djéssica Eickstaedt
  */
 public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
+
     Carro[] lista;
+    private String address = "http://127.0.0.1:1991/SOAP";
+
+    public ClienteInterfaceListaAnoModelo(String address) {
+        initComponents();
+        this.address = address;
+    }
+
     /**
      * Creates new form ClienteInterfaceAdiciona
      */
@@ -39,6 +49,7 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
         botao_busca = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         Tabela = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,7 +69,7 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
 
         jLabel4.setText("Ano:");
 
-        botao_busca.setText("Buscar");
+        botao_busca.setText("Listar");
         botao_busca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botao_buscaActionPerformed(evt);
@@ -70,41 +81,51 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "null", "Título 2", "Título 3", "Título 4", "Título 5", "Título 6", "Título 7"
+                "Código", "Ano", "Modelo", "Marca", "Carga", "Potência", "Complemento"
             }
         ));
         jScrollPane2.setViewportView(Tabela);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Listar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(294, Short.MAX_VALUE)
-                .addComponent(botao_busca)
-                .addGap(41, 41, 41))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                                .addComponent(campo_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(campo_ano, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(botao_busca))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                                    .addComponent(campo_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(campo_ano, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(262, 262, 262)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(25, 25, 25)
+                .addComponent(jLabel1)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(campo_ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
@@ -118,7 +139,7 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
                             .addComponent(campo_modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -134,12 +155,13 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
     }//GEN-LAST:event_campo_modeloActionPerformed
 
     private void botao_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_buscaActionPerformed
-        SoapClient cliente = new SoapClient();
+        SoapClient cliente = new SoapClient(address);
         try {
             lista = cliente.listaAnoModelo(Integer.valueOf(campo_ano.getText()), campo_modelo.getText());
             atualizarTabela();
         } catch (Exception ex) {
-            Logger.getLogger(ClienteInterfaceListaAnoModelo.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
+            Logs.out(ex.getMessage().toString());
         }
 
 
@@ -192,6 +214,7 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
     private javax.swing.JButton botao_busca;
     private javax.swing.JTextField campo_ano;
     private javax.swing.JTextField campo_modelo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
@@ -202,11 +225,11 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
         dtm.setRowCount(0);
         for (Carro c : lista) {
             if (c != null) {
-                dtm.addRow(new Object[]{c.getCodigo(), c.getAno(), c.getModelo(), c.getMarca(), 
+                dtm.addRow(new Object[]{c.getCodigo(), c.getAno(), c.getModelo(), c.getMarca(),
                     c.getCarga(), c.getPotencia(), c.getComplemento()});
+            } else {
+                dtm.addRow(new Object[]{"", "", "", "", "", "", ""});
             }
-            else
-                dtm.addRow(new Object[]{"","","","","","",""});
         }
     }
 }

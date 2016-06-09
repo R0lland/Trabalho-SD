@@ -6,6 +6,7 @@
 package SOAP;
 
 import Entidades.Carro;
+import Logs.Logs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -15,7 +16,12 @@ import javax.swing.JOptionPane;
  * @author Djéssica Eickstaedt
  */
 public class ClienteInterfaceConsulta extends javax.swing.JFrame {
+    private String address = "http://127.0.0.1:1991/SOAP";
 
+    public ClienteInterfaceConsulta(String address) {
+        initComponents();
+        this.address = address;
+    }
     /**
      * Creates new form ClienteInterfaceAdiciona
      */
@@ -47,6 +53,7 @@ public class ClienteInterfaceConsulta extends javax.swing.JFrame {
         campo_codigo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         botao_busca = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,6 +120,9 @@ public class ClienteInterfaceConsulta extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Consulta");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -160,11 +170,17 @@ public class ClienteInterfaceConsulta extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(botao_busca)
                 .addGap(41, 41, 41))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(178, 178, 178)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(48, 48, 48)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campo_codigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botao_busca)
@@ -222,7 +238,7 @@ public class ClienteInterfaceConsulta extends javax.swing.JFrame {
     }//GEN-LAST:event_campo_codigoActionPerformed
 
     private void botao_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_buscaActionPerformed
-       SoapClient cliente = new SoapClient();
+       SoapClient cliente = new SoapClient(address);
         try { 
             Carro carro = cliente.consulta(Integer.parseInt(campo_codigo.getText()));
             campo_ano.setText(String.valueOf(carro.getAno()));
@@ -232,7 +248,8 @@ public class ClienteInterfaceConsulta extends javax.swing.JFrame {
             campo_modelo.setText(carro.getModelo());
             campo_potencia.setText(String.valueOf(carro.getPotencia()));
         } catch (Exception ex) {
-            Logger.getLogger(ClienteInterfaceConsulta.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
+            Logs.out(ex.getMessage().toString());
         }
         
         
@@ -285,6 +302,7 @@ public class ClienteInterfaceConsulta extends javax.swing.JFrame {
     private javax.swing.JTextField campo_marca;
     private javax.swing.JTextField campo_modelo;
     private javax.swing.JTextField campo_potencia;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

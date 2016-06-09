@@ -15,58 +15,65 @@ import javax.xml.ws.Service;
  * @author Djéssica Eickstaedt
  */
 public class SoapClient {
-  private String address;
 
-      public String getAddress() {
+    private String address;
+
+    public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }    
+    }
+
     public SoapClient() {
         this.address = "http://127.0.0.1:1991/SOAP?wsdl";
     }
+
     public SoapClient(String address) {
         this.address = address + "?wsdl";
     }
-  
-    public void  adiciona(Carro carro) throws Exception {
-        URL url= new URL(address);
-        QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
-        Service ws=Service.create(url,qname);
+
+    public void adiciona(Carro carro) throws Exception {
+        URL url = new URL(address);
+        QName qname = new QName("http://SOAP/", "SoapServiceImplementationBeanService");
+        Service ws = Service.create(url, qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-         interf.Adiciona(carro);
-         
+        interf.Adiciona(carro);
+
     }
-     public Carro  consulta(Integer codigo) throws Exception {
-        URL url= new URL(address);
-        QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
-        Service ws=Service.create(url,qname);
+
+    public Carro consulta(Integer codigo) throws Exception {
+        URL url = new URL(address);
+        QName qname = new QName("http://SOAP/", "SoapServiceImplementationBeanService");
+        Service ws = Service.create(url, qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
         return interf.Consulta(codigo);
-         
+
     }
-      public void  altera(Carro carro) throws Exception {
-        URL url= new URL(address);
-        QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
-        Service ws=Service.create(url,qname);
+
+    public void altera(Carro carro) throws Exception {
+        URL url = new URL(address);
+        QName qname = new QName("http://SOAP/", "SoapServiceImplementationBeanService");
+        Service ws = Service.create(url, qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-         interf.Altera(carro);
-         
+        interf.Altera(carro);
+
     }
-    public void  excluir( Carro carro) throws Exception {
-        URL url= new URL(address);
-        QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
-        Service ws=Service.create(url,qname);
+
+    public void excluir(Carro carro) throws Exception {
+        URL url = new URL(address);
+        QName qname = new QName("http://SOAP/", "SoapServiceImplementationBeanService");
+        Service ws = Service.create(url, qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-         interf.Excluir(carro);
+        interf.Excluir(carro);
     }
-    public Carro[]  listaAnoModelo(Integer ano, String modelo) throws Exception {
-        URL url= new URL(address);
-        QName qname= new QName("http://SOAP/","SoapServiceImplementationBeanService");
-        Service ws=Service.create(url,qname);
+
+    public Carro[] listaAnoModelo(Integer ano, String modelo) throws Exception {
+        URL url = new URL(address);
+        QName qname = new QName("http://SOAP/", "SoapServiceImplementationBeanService");
+        Service ws = Service.create(url, qname);
         SoapServiceEndpointInterface interf = ws.getPort(SoapServiceEndpointInterface.class);
-        return interf.listaAnoModelo(ano,modelo);
+        return interf.listaAnoModelo(ano, modelo);
     }
 }

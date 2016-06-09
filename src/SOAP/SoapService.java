@@ -13,9 +13,10 @@ import javax.xml.ws.Endpoint;
  *
  * @author Ricardo Deitoz Posser
  */
-public class SoapService implements Runnable{
-      private static String address = "http://127.0.0.1:1991/SOAP";
-         private boolean running = true;
+public class SoapService implements Runnable {
+
+    private static String address = "http://127.0.0.1:1991/SOAP";
+    private boolean running = true;
 
     public static String getAddress() {
         return address;
@@ -24,25 +25,24 @@ public class SoapService implements Runnable{
     public static void setAddress(String aAddress) {
         address = aAddress;
     }
-  
-      public SoapService(String address) {
-          SoapService.address = address;
-          System.out.println(address);
-      }
- 
-      @Override
-     public void run() {
-         Endpoint.publish(address,
-                 new SoapServiceImplementationBean());
-         while (running)
-         {
-             try {
-                 Thread.sleep(10000);
-             } catch (InterruptedException ex) {
-                 Logger.getLogger(SoapService.class.getName()).log(Level.SEVERE, null, ex);
-             }
-         }
-     }
+
+    public SoapService(String address) {
+        SoapService.address = address;
+        System.out.println(address);
+    }
+
+    @Override
+    public void run() {
+        Endpoint.publish(address,
+                new SoapServiceImplementationBean());
+        while (running) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SoapService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     public boolean isRunning() {
         return running;
@@ -51,9 +51,9 @@ public class SoapService implements Runnable{
     public void setRunning(boolean running) {
         this.running = running;
     }
-    
-         public static void main(String[] args) {
-         Endpoint.publish(address,
-                 new SoapServiceImplementationBean());
-         }
- }
+
+    public static void main(String[] args) {
+        Endpoint.publish(address,
+                new SoapServiceImplementationBean());
+    }
+}
