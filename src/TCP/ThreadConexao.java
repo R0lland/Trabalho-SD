@@ -29,6 +29,7 @@ public class ThreadConexao extends Thread {
     String msg;
     Carro carroVem;
     List<Carro> listaCarro;
+    String clientIP;
 
     public ThreadConexao(Socket s, InputStream vem, OutputStream vai) {
         this.s = s;
@@ -45,6 +46,7 @@ public class ThreadConexao extends Thread {
     }
 
     public void run() {
+         clientIP = (String) s.getInetAddress().getHostAddress().toString() + ":" + s.getPort();
         while (true) {
             System.out.println("");
 
@@ -63,12 +65,13 @@ public class ThreadConexao extends Thread {
                 if (msg.equals("1")) {
                     try {
                         OperacoesBD.adicionaCarro(enviaDadosVem.getCarro());
-                        System.out.println(s.getInetAddress().getHostAddress()
-                                + ":" + s.getPort() + "  Inseriu o carro no banco");
+                        System.out.println(clientIP + "  Inseriu o carro no banco");
                         enviaDados = new EnviaDados("Inseriu");
+                        Logs.Logs.logDebug(clientIP + "  Inseriu o carro no banco");
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Codigo de Carro ja existente");
-                        System.out.println("Nao inseriu. Codigo ja existe");
+                        System.out.println(clientIP + "  Nao inseriu. Codigo ja existe");
+                        Logs.Logs.logDebug(clientIP + "  Nao inseriu. Codigo ja existe");
                         //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
@@ -76,12 +79,13 @@ public class ThreadConexao extends Thread {
                 if (msg.equals("2")) {
                     try {
                         carroVem = OperacoesBD.consultaCarro(enviaDadosVem.getCarro().getCodigo());
-                        System.out.println(s.getInetAddress().getHostAddress() 
-                                + ":" + s.getPort() + "  Consultou");
+                        System.out.println(clientIP + "  Consultou");
                         enviaDados = new EnviaDados(carroVem);
+                        Logs.Logs.logDebug(clientIP + "  Consultou");
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Codigo de Carro nao existente");
-                        System.out.println("Nao consultou. Codigo de carro nao existe");
+                        System.out.println(clientIP + "  Nao consultou. Codigo de carro nao existe");
+                        Logs.Logs.logDebug(clientIP + "  Nao consultou. Codigo de carro nao existe");
                         //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
@@ -90,12 +94,13 @@ public class ThreadConexao extends Thread {
                     try {
                         carroVem = OperacoesBD.consultaCarro(enviaDadosVem.getCarro().getCodigo());
                         OperacoesBD.alteraCarro(enviaDadosVem.getCarro());
-                        System.out.println(s.getInetAddress().getHostAddress()
-                                + ":" + s.getPort() + "  Alterou");
+                        System.out.println(clientIP + "  Alterou");
                         enviaDados = new EnviaDados("Alterou");
+                        Logs.Logs.logDebug(clientIP + "  Inseriu o carro no banco");
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Nao alterado. Carro nao existente");
-                        System.out.println("Nao alterou. Carro nao existe");
+                        System.out.println(clientIP + "  Nao alterou. Carro nao existe");
+                        Logs.Logs.logDebug(clientIP + "  Nao alterou. Carro nao existe");
                         //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
@@ -104,11 +109,12 @@ public class ThreadConexao extends Thread {
                     try {
                         carroVem = OperacoesBD.consultaCarro(enviaDadosVem.getCarro().getCodigo());
                         OperacoesBD.deletaCarro(enviaDadosVem.getCarro());
-                        System.out.println(s.getInetAddress().getHostAddress() + ":" + s.getPort() +  "  Deletou");
+                        System.out.println(clientIP +  "  Deletou");
                         enviaDados = new EnviaDados("Deletou");
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Codigo de Carro nao existente");
-                        System.out.println("Nao deletou. Carro nao existe");
+                        System.out.println(clientIP + "  Nao deletou. Carro nao existe");
+                        Logs.Logs.logDebug(clientIP +  "  Nao deletou. Carro nao existe");
                         //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
@@ -116,7 +122,8 @@ public class ThreadConexao extends Thread {
                 if (msg.equals("5")) {
                     try {
                         listaCarro = OperacoesBD.listaAnoModelo(enviaDadosVem.getCarro().getAno(), enviaDadosVem.getCarro().getModelo());
-                        System.out.println(s.getInetAddress().getHostAddress() + ":" + s.getPort() + "  Listou Ano e modelo");
+                        System.out.println(clientIP + "  Listou Ano e modelo");
+                        Logs.Logs.logDebug(clientIP +  "  Listou Ano e modelo");
                         if(listaCarro.isEmpty())
                             enviaDados = new EnviaDados(9, "Nao existem carros com esse ano e modelo");
                         else
@@ -129,7 +136,8 @@ public class ThreadConexao extends Thread {
                 if (msg.equals("6")) {
                     try {
                         listaCarro = OperacoesBD.listaCarro();
-                        System.out.println(s.getInetAddress().getHostAddress() + ":" + s.getPort() + "  Listou todos os carros");
+                        System.out.println(clientIP + "  Listou todos os carros");
+                        Logs.Logs.logDebug(clientIP +  "  Listou todos os carros");
                         if(listaCarro.isEmpty())
                             enviaDados = new EnviaDados(9, "Nao existe nenhum registro");
                         else
