@@ -259,17 +259,17 @@ public class ClienteInterfaceAltera extends javax.swing.JFrame {
        );
        
         try {
+            cliente.consulta(Integer.parseInt(campo_codigo.getText()));
             cliente.altera(carro);
             JOptionPane.showMessageDialog(rootPane, "Carro alterado com sucesso.");
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
-            Logs.out(ex.getMessage().toString());
+            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage());
         }
     }//GEN-LAST:event_salvarActionPerformed
 
     private void botao_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_buscaActionPerformed
-       SoapClient cliente = new SoapClient();
+       SoapClient cliente = new SoapClient(address);
         try { 
             Carro carro = cliente.consulta(Integer.parseInt(campo_codigo.getText()));
             campo_ano.setText(String.valueOf(carro.getAno()));

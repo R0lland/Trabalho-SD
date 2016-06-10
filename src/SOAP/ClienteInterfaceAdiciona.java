@@ -255,8 +255,7 @@ public class ClienteInterfaceAdiciona extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Carro adicionado com sucesso.");
             
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
-            Logs.out(ex.getMessage().toString());
+            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage());
         }
     }//GEN-LAST:event_salvarActionPerformed
 

@@ -5,6 +5,7 @@
  */
 package SOAP;
 
+import Logs.Logs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.ws.Endpoint;
@@ -28,13 +29,13 @@ public class SoapService implements Runnable {
 
     public SoapService(String address) {
         SoapService.address = address;
-        System.out.println(address);
     }
 
     @Override
     public void run() {
         Endpoint.publish(address,
                 new SoapServiceImplementationBean());
+        Logs.logDebug("Serviço executando no endereço "+address + "\n", "SoapService");
         while (running) {
             try {
                 Thread.sleep(10000);
@@ -55,5 +56,6 @@ public class SoapService implements Runnable {
     public static void main(String[] args) {
         Endpoint.publish(address,
                 new SoapServiceImplementationBean());
+        Logs.logDebug("Serviço executando no endereço "+address + "\n", "SoapService");
     }
 }

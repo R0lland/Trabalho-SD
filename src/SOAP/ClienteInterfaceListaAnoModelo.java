@@ -161,7 +161,6 @@ public class ClienteInterfaceListaAnoModelo extends javax.swing.JFrame {
             atualizarTabela();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
-            Logs.out(ex.getMessage().toString());
         }
 
 

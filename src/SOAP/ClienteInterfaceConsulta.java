@@ -7,8 +7,6 @@ package SOAP;
 
 import Entidades.Carro;
 import Logs.Logs;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -248,8 +246,7 @@ public class ClienteInterfaceConsulta extends javax.swing.JFrame {
             campo_modelo.setText(carro.getModelo());
             campo_potencia.setText(String.valueOf(carro.getPotencia()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
-            Logs.out(ex.getMessage().toString());
+            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage());
         }
         
         

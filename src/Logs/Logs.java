@@ -7,32 +7,22 @@
 package Logs;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author Ricardo Deitoz Posser
  */
 public class Logs {
-
-    public static void out(String log) {
-        
-
-        // Gravar log
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
-    public static void logDebug(String log){
-        
+    public static void logDebug(String log, String origem){
         try {
             // O parametro é que indica se deve sobrescrever ou continua no
             // arquivo.
-            FileWriter fw = new FileWriter("D:\\teste.txt", true);
+            
+                    
+            FileWriter fw = new FileWriter("C:\\Logs\\" + origem + ".txt", true);
             BufferedWriter conexao = new BufferedWriter(fw);
             conexao.write(log);
             conexao.newLine();

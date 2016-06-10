@@ -7,8 +7,6 @@ package SOAP;
 
 import Entidades.Carro;
 import Logs.Logs;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -262,18 +260,19 @@ public class ClienteInterfaceExcluir extends javax.swing.JFrame {
         );
 
         try {
+            cliente.consulta(Integer.parseInt(campo_codigo.getText()));
             cliente.excluir(carro);
             JOptionPane.showMessageDialog(rootPane, "Carro excluido com sucesso.");
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
-            Logs.out(ex.getMessage().toString());
+            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage());
         }
     }//GEN-LAST:event_excluirActionPerformed
 
     private void botao_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botao_buscaActionPerformed
         SoapClient cliente = new SoapClient(address);
         try {
+            
             Carro carro = cliente.consulta(Integer.parseInt(campo_codigo.getText()));
             campo_ano.setText(String.valueOf(carro.getAno()));
             campo_carga.setText(String.valueOf(carro.getCarga()));
@@ -282,8 +281,7 @@ public class ClienteInterfaceExcluir extends javax.swing.JFrame {
             campo_modelo.setText(carro.getModelo());
             campo_potencia.setText(String.valueOf(carro.getPotencia()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage().toString());
-            Logs.out(ex.getMessage().toString());
+            JOptionPane.showMessageDialog(rootPane, "ERRO: " + ex.getMessage());
         }
 
 
@@ -321,6 +319,7 @@ public class ClienteInterfaceExcluir extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new ClienteInterfaceExcluir().setVisible(true);
             }
