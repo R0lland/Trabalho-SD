@@ -127,6 +127,7 @@ public class RetiraFila extends Thread{
                         }   break;
                     case 3:
                         try {
+                            carroVem = OperacoesBD.consultaCarro(carro.getCodigo());
                             OperacoesBD.alteraCarro(carro);
                             retornaDados = "Carro alterado com sucesso!";
                         } catch (SQLException ex) {
@@ -135,6 +136,7 @@ public class RetiraFila extends Thread{
                         }   break;
                     case 4:
                         try {
+                            carroVem = OperacoesBD.consultaCarro(carro.getCodigo());
                             OperacoesBD.deletaCarro(carro);
                             retornaDados = "Carro deletado com sucesso!";
                         } catch (SQLException ex) {
