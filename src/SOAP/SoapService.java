@@ -5,7 +5,9 @@
  */
 package SOAP;
 
+import BD.OperacoesBD;
 import Logs.Logs;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.ws.Endpoint;
@@ -15,7 +17,6 @@ import javax.xml.ws.Endpoint;
  * @author Ricardo Deitoz Posser
  */
 public class SoapService implements Runnable {
-
     private static String address = "http://127.0.0.1:1991/SOAP";
     private boolean running = true;
 
@@ -33,6 +34,11 @@ public class SoapService implements Runnable {
 
     @Override
     public void run() {
+        try {
+            OperacoesBD.beginReplica();
+        } catch (SQLException ex) {
+            Logger.getLogger(SoapService.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Endpoint.publish(address,
                 new SoapServiceImplementationBean());
         Logs.logDebug("Serviço executando no endereço "+address + "\n", "SoapService");
