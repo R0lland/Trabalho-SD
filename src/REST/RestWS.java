@@ -6,6 +6,7 @@
 package REST;
 
 // Plain old Java Object it does not extend as class or implements 
+/*
 import BD.OperacoesBD;
 import Entidades.Carro;
 import com.google.gson.Gson;
@@ -211,4 +212,4 @@ public class RestWS {
         }
 
     }
-}
+}*/
