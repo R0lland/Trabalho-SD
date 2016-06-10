@@ -48,6 +48,12 @@ public class ThreadConexao extends Thread {
 
     public void run() {
          clientIP = (String) s.getInetAddress().getHostAddress().toString() + ":" + s.getPort();
+        try {
+            OperacoesBD.beginReplica();
+        } catch (SQLException ex) {
+            //Logger.getLogger(ThreadConexao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Nao replicou pra nuvem");
+        }
         while (true) {
             System.out.println("");
 
