@@ -27,7 +27,7 @@ public class Conexao {
     static String url = "jdbc:postgresql://localhost/Trabalho_SD";
     static String driver = "org.postgresql.Driver";
     static String usuario = "postgres";
-    static String senha = "masterkey";
+    static String senha = "admin";
   
 
     static Connection con = null;

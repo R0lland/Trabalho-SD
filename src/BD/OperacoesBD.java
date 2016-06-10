@@ -20,12 +20,19 @@ import java.util.List;
 public class OperacoesBD {
     
     
-   /* public static void beginReplica() throws SQLException{
+    public static void beginReplica() throws SQLException{
         String sql = "select f_conecta()";
         PreparedStatement stmt = Conexao.getPreparedStatement(sql);
         stmt.execute();
     }
-    */
+    
+    
+    public static void endReplica() throws SQLException{
+        String sql = "select f_desconecta()";
+        PreparedStatement stmt = Conexao.getPreparedStatement(sql);
+        stmt.execute();
+    }
+            
 
     public static void adicionaCarro(Carro carro) throws SQLException {
         //  1i     2s      3s     4i     5f      6f       7s
