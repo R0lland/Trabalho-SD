@@ -7,7 +7,6 @@
 package Logs;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 
 /**
@@ -17,12 +16,12 @@ import java.io.FileWriter;
 public class Logs {
     
     public static void logDebug(String log, String origem){
+       
         try {
             // O parametro é que indica se deve sobrescrever ou continua no
             // arquivo.
-            
-                    
-            FileWriter fw = new FileWriter("C:\\Logs\\" + origem + ".txt", true);
+            FileWriter fw;
+            fw = new FileWriter(path() + origem + ".txt", true);
             BufferedWriter conexao = new BufferedWriter(fw);
             conexao.write(log);
             conexao.newLine();
@@ -32,4 +31,19 @@ public class Logs {
         }
     }
     
+    public static String path()
+    {
+        String s = new Logs().getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+
+        String[] A;
+        String B= "";
+        A = s.split("/");
+        for (int i = 1; i < A.length-1; i++)
+        {
+            B = B.concat(A[i]);
+            B = B.concat("/");
+        }
+        System.out.println(B);
+        return B;
+    }
 }
