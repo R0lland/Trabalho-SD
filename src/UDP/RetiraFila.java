@@ -39,6 +39,7 @@ public class RetiraFila extends Thread{
         Carro carroVem;
         int opcao;
         String retornaDados;
+        String udp = "udp";
         EnviaDados enviaDados;
         List<Carro> listaCarro = null;
         
@@ -101,14 +102,16 @@ public class RetiraFila extends Thread{
                             //carro.mostarCarro();
                             OperacoesBD.adicionaCarro(carro);
                             retornaDados = "Carro inserido com sucesso!";
+                            Logs.Logs.logDebug("Carro inserido codigo " + carro.getCodigo(), udp);
                         } catch (SQLException ex) {
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             if(ex.getErrorCode() == 0){
                                 retornaDados = "Não foi possível inserir o carro: Código já utilizado";
+                                Logs.Logs.logDebug(retornaDados, udp);
                             }else{
                                 retornaDados = "Não foi possível inserir o carro";
+                                Logs.Logs.logDebug(retornaDados, udp);
                             }
-                            
                         }   break;
                     case 2:
                         try {
@@ -120,10 +123,12 @@ public class RetiraFila extends Thread{
                                     carroVem.getPotencia() + ":" +
                                     carroVem.getCarga() + ":" +
                                     carroVem.getComplemento();
-                            System.out.println("Consultou");
+                            System.out.println("Consultou carro codigo " + carroVem.getCodigo());
+                            Logs.Logs.logDebug("Consultou carro codigo " + carroVem.getCodigo(), udp);
                         } catch (SQLException ex) {
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             retornaDados = "Não foi possível fazer a consulta";
+                            Logs.Logs.logDebug(retornaDados, udp);
                         }   break;
                     case 3:
                         try {
@@ -133,7 +138,9 @@ public class RetiraFila extends Thread{
                         } catch (SQLException ex) {
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             retornaDados = "Não foi possível alterar o carro";
-                        }   break;
+                        }   
+                        Logs.Logs.logDebug(retornaDados, udp);
+                        break;
                     case 4:
                         try {
                             carroVem = OperacoesBD.consultaCarro(carro.getCodigo());
@@ -142,7 +149,9 @@ public class RetiraFila extends Thread{
                         } catch (SQLException ex) {
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             retornaDados = "Não foi possível deletar o carro";
-                        }   break;
+                        }
+                        Logs.Logs.logDebug(retornaDados, udp);   
+                        break;
                     case 5:
                         try {
                             listaCarro = OperacoesBD.listaAnoModelo(carro.getAno(), carro.getModelo());
@@ -157,11 +166,12 @@ public class RetiraFila extends Thread{
                                                car.getPotencia()+ ":" +
                                                car.getComplemento();
                             }
-//                            System.out.println("oi");
+                            Logs.Logs.logDebug("Lista por Ano " + carro.getAno() + " e Modelo " + carro.getModelo(), udp);
+
                         } catch (SQLException ex) {
-                            System.out.println("oiiiii");
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             retornaDados = "Não foi possível listar os dados";
+                            Logs.Logs.logDebug(retornaDados, udp);
                         } break;
                     case 6:
                         try {
@@ -177,9 +187,11 @@ public class RetiraFila extends Thread{
                                                car.getPotencia()+ ":" +
                                                car.getComplemento();
                             }
+                            Logs.Logs.logDebug("Listou todos os carros", udp);
                         } catch (SQLException ex) {
                             System.out.println(Servidor.getDataHora() + ex.getMessage());
                             retornaDados = "Não foi possível listar os dados";
+                            Logs.Logs.logDebug(retornaDados, udp);
                         } break;
                     default:
                         break;
