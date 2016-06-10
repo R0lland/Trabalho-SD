@@ -5,12 +5,16 @@
  */
 package UDP;
 
+import BD.OperacoesBD;
 import java.io.IOException;
 import java.net.DatagramSocket;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Servidor {
     
@@ -28,7 +32,11 @@ public class Servidor {
         serverSocket = new DatagramSocket(portaServidor);
         
         application.execute(new EnviaFila(filaCompartilhada, serverSocket));
-        
+        try {
+            OperacoesBD.beginReplica();
+        } catch (SQLException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         application.execute(new RetiraFila(filaCompartilhada, serverSocket));
         
         application.shutdown();
