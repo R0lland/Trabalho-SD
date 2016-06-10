@@ -46,7 +46,7 @@ public class ThreadConexao extends Thread {
 
     public void run() {
         while (true) {
-            System.out.println("Aguardando Operacao ...");
+            System.out.println("");
 
             //ler o objeto que vira do cliente
             try {
@@ -63,51 +63,60 @@ public class ThreadConexao extends Thread {
                 if (msg.equals("1")) {
                     try {
                         OperacoesBD.adicionaCarro(enviaDadosVem.getCarro());
-                        System.out.println("Inseriu o carro no banco");
+                        System.out.println(s.getInetAddress().getHostAddress()
+                                + ":" + s.getPort() + "  Inseriu o carro no banco");
                         enviaDados = new EnviaDados("Inseriu");
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Codigo de Carro ja existente");
-                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Nao inseriu. Codigo ja existe");
+                        //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                 }
                 if (msg.equals("2")) {
                     try {
                         carroVem = OperacoesBD.consultaCarro(enviaDadosVem.getCarro().getCodigo());
-                        System.out.println("Consultou");
+                        System.out.println(s.getInetAddress().getHostAddress() 
+                                + ":" + s.getPort() + "  Consultou");
                         enviaDados = new EnviaDados(carroVem);
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Codigo de Carro nao existente");
-                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Nao consultou. Codigo de carro nao existe");
+                        //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                 }
                 if (msg.equals("3")) {
                     try {
+                        carroVem = OperacoesBD.consultaCarro(enviaDadosVem.getCarro().getCodigo());
                         OperacoesBD.alteraCarro(enviaDadosVem.getCarro());
-                        System.out.println("Alterou");
+                        System.out.println(s.getInetAddress().getHostAddress()
+                                + ":" + s.getPort() + "  Alterou");
                         enviaDados = new EnviaDados("Alterou");
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Nao alterado. Carro nao existente");
-                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Nao alterou. Carro nao existe");
+                        //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                 }
                 if (msg.equals("4")) {
                     try {
+                        carroVem = OperacoesBD.consultaCarro(enviaDadosVem.getCarro().getCodigo());
                         OperacoesBD.deletaCarro(enviaDadosVem.getCarro());
-                        System.out.println("Deletou");
+                        System.out.println(s.getInetAddress().getHostAddress() + ":" + s.getPort() +  "  Deletou");
                         enviaDados = new EnviaDados("Deletou");
                     } catch (SQLException ex) {
                         enviaDados = new EnviaDados(9, "Codigo de Carro nao existente");
-                        Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Nao deletou. Carro nao existe");
+                        //Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                 }
                 if (msg.equals("5")) {
                     try {
                         listaCarro = OperacoesBD.listaAnoModelo(enviaDadosVem.getCarro().getAno(), enviaDadosVem.getCarro().getModelo());
-                        System.out.println("Listou Ano e modelo");
+                        System.out.println(s.getInetAddress().getHostAddress() + ":" + s.getPort() + "  Listou Ano e modelo");
                         if(listaCarro.isEmpty())
                             enviaDados = new EnviaDados(9, "Nao existem carros com esse ano e modelo");
                         else
@@ -120,7 +129,7 @@ public class ThreadConexao extends Thread {
                 if (msg.equals("6")) {
                     try {
                         listaCarro = OperacoesBD.listaCarro();
-                        System.out.println("Listou todos os carros");
+                        System.out.println(s.getInetAddress().getHostAddress() + ":" + s.getPort() + "  Listou todos os carros");
                         if(listaCarro.isEmpty())
                             enviaDados = new EnviaDados(9, "Nao existe nenhum registro");
                         else
@@ -146,7 +155,7 @@ public class ThreadConexao extends Thread {
             if (msg.equals("7")) {
                 try {
                     System.out.println("Cliente " +
-                            s.getInetAddress().getHostAddress() + ":" + s.getPort() + " encerrou a conexao");
+                            s.getInetAddress().getHostAddress() + ":" + s.getPort() + "  encerrou a conexao");
                     s.close();
                     break;
                 } catch (IOException ex) {

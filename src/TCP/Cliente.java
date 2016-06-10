@@ -69,17 +69,16 @@ public class Cliente {
                 continue;
                 //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
-            try
-            {
+            try {
                 opcao = Integer.parseInt(msg);
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println("Insira a operacao");
                 continue;
             }
-            
 
             if (opcao > 7 || opcao < 1) {
                 System.out.println("Opção invalida");
+                continue;
             }
 
             if (opcao > 0 && opcao < 8) {
@@ -113,7 +112,7 @@ public class Cliente {
                         System.out.println("Digite um codigo valido");
                         continue;
                         //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-                        
+
                     }
                 } else if (msg.equals("2")) {
                     System.out.println("Digite o código do carro a consultar: ");
@@ -161,35 +160,37 @@ public class Cliente {
                     Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-            if(enviaDadosVolta.getOperacao() != null)//Se der erro em alguma operaçao, retornará valor 9 e uma mensagem.
+
+            if (opcao != 7)//Se der erro em alguma operaçao, nao retornara nenhum valor
             {
-                System.out.println(enviaDadosVolta.getMsg());
-                continue;
-            }
-            
-            if (opcao > 0 && opcao < 5) {
-                if(msg.equals("2")){
-                    System.out.println(enviaDadosVolta.getCarro().getCodigo() + " - " +
-                            enviaDadosVolta.getCarro().getMarca()+ " - " +
-                            enviaDadosVolta.getCarro().getModelo()+ " - " +
-                            enviaDadosVolta.getCarro().getAno()+ " - " +
-                            enviaDadosVolta.getCarro().getCarga()+ " - " +
-                            enviaDadosVolta.getCarro().getPotencia()+ " - " +
-                            enviaDadosVolta.getCarro().getComplemento());
-                }
-                else
+                if (enviaDadosVolta.getOperacao() != null) {
                     System.out.println(enviaDadosVolta.getMsg());
+                    continue;
+                }
+            }
+
+            if (opcao > 0 && opcao < 5) {
+                if (msg.equals("2")) {
+                    System.out.println(enviaDadosVolta.getCarro().getCodigo() + " - "
+                            + enviaDadosVolta.getCarro().getMarca() + " - "
+                            + enviaDadosVolta.getCarro().getModelo() + " - "
+                            + enviaDadosVolta.getCarro().getAno() + " - "
+                            + enviaDadosVolta.getCarro().getCarga() + " - "
+                            + enviaDadosVolta.getCarro().getPotencia() + " - "
+                            + enviaDadosVolta.getCarro().getComplemento());
+                } else {
+                    System.out.println(enviaDadosVolta.getMsg());
+                }
             }
             if (msg.equals("5") || msg.equals("6")) {
                 for (Carro car : enviaDadosVolta.getListaCarro()) {
-                    System.out.println(car.getCodigo() + " - " +
-                            car.getMarca()+ " - " +
-                            car.getModelo()+ " - " +
-                            car.getAno()+ " - " +
-                            car.getCarga()+ " - " +
-                            car.getPotencia()+ " - " +
-                            car.getComplemento());
+                    System.out.println(car.getCodigo() + " - "
+                            + car.getMarca() + " - "
+                            + car.getModelo() + " - "
+                            + car.getAno() + " - "
+                            + car.getCarga() + " - "
+                            + car.getPotencia() + " - "
+                            + car.getComplemento());
                 }
             }
             if (msg.equals("7")) {

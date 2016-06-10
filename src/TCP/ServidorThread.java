@@ -11,10 +11,10 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ServidorThread  implements Runnable {
+public class ServidorThread {
 
     public static void main(String[] args) throws Exception{
-        System.out.println("teste...");
+        System.out.println("Servidor TCP Iniciado");
         int porta = 2006;
 
         ServerSocket ss;
@@ -29,34 +29,4 @@ public class ServidorThread  implements Runnable {
             new Thread(tc).start();
         }
     }
-
-    @Override
-    public void run(){
-        int porta = 2006;
-
-        ServerSocket ss = null;
-        try {
-            ss = new ServerSocket(porta);
-        } catch (IOException ex) {
-            Logger.getLogger(ServidorThread.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        while (true) {// Enquanto for true recebe requisicoes do cliente
-
-            Socket s = null;
-            try {
-                s = ss.accept();
-            } catch (IOException ex) {
-                Logger.getLogger(ServidorThread.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Conexão iniciada com o cliente "
-                    + s.getInetAddress().getHostAddress() + ":" + s.getPort());
-            ThreadConexao tc = null;
-            try {
-                tc = new ThreadConexao(s, s.getInputStream(), s.getOutputStream());
-            } catch (IOException ex) {
-                Logger.getLogger(ServidorThread.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            new Thread(tc).start();
-        }}
 }
