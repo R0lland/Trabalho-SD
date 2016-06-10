@@ -14,7 +14,10 @@ import java.util.logging.Logger;
 public class ServidorThread {
 
     public static void main(String[] args) throws Exception{
+        String tcp = "tcp";
         System.out.println("Servidor TCP Iniciado");
+        Logs.Logs.logDebug("Servidor TCP Iniciado");
+        
         int porta = 2006;
 
         ServerSocket ss;
@@ -24,6 +27,8 @@ public class ServidorThread {
 
             Socket s = ss.accept();
             System.out.println("Conexão iniciada com o cliente "
+                    + s.getInetAddress().getHostAddress() + ":" + s.getPort());
+            Logs.Logs.logDebug("Conexão iniciada com o cliente "
                     + s.getInetAddress().getHostAddress() + ":" + s.getPort());
             ThreadConexao tc = new ThreadConexao(s, s.getInputStream(), s.getOutputStream());
             new Thread(tc).start();
