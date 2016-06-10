@@ -34,7 +34,9 @@ public class Cliente {
             System.out.println("Digite o IP: ");
             host = reader.readLine();
         } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Servidor nao encontrado");
+            System.exit(0);
         }
         int port = 2010;
         InetAddress enderecoServidor = null;
