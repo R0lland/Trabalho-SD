@@ -42,7 +42,9 @@ public class Cliente {
         try {
             s = new Socket(host, porta);
         } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Servidor nao encontrado");
+            System.exit(0);
         }
 
         ObjectOutputStream vai = null;
