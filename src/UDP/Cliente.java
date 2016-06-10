@@ -22,12 +22,20 @@ import java.util.logging.Logger;
 public class Cliente {
 
     public static void main(String[] args){
+        
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         byte[] buf1 = new byte[1000];
         byte[] buf2 = new byte[1000];
         String sEnviaDados;
         String resposta;
         String[] parts;
         String host = "localhost";
+        try {
+            System.out.println("Digite o IP: ");
+            host = reader.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         int port = 2010;
         InetAddress enderecoServidor = null;
         
@@ -45,7 +53,6 @@ public class Cliente {
         Integer opcao;
         Carro carro;
         List<Carro> lista = null;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         
         System.out.println("1 - Adicionar\n"
                         + "2 - Consultar\n"
