@@ -22,7 +22,14 @@ public class Cliente {
 
     public static void main(String[] args) {
         int porta = 2006;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));  
         String host = new String("localhost");
+        System.out.println("Digite o IP: ");
+        try {
+            host = reader.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String msg = new String();
         EnviaDados enviaDados = null;
         EnviaDados enviaDadosVolta = null;
@@ -30,7 +37,7 @@ public class Cliente {
         Socket s = null;
         Carro carro = null;
         List<Carro> lista = null;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        
 
         try {
             s = new Socket(host, porta);
